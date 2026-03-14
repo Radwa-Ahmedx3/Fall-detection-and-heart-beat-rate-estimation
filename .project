@@ -1,0 +1,74 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<projectDescription>
+	<name>Fall detection and heart beat rate estimation</name>
+	<comment></comment>
+	<projects>
+	</projects>
+	<buildSpec>
+		<buildCommand>
+			<name>org.eclipse.cdt.managedbuilder.core.genmakebuilder</name>
+			<triggers>clean,full,incremental,</triggers>
+			<arguments>
+			</arguments>
+		</buildCommand>
+		<buildCommand>
+			<name>org.eclipse.cdt.managedbuilder.core.ScannerConfigBuilder</name>
+			<triggers>full,incremental,</triggers>
+			<arguments>
+			</arguments>
+		</buildCommand>
+	</buildSpec>
+	<natures>
+		<nature>org.eclipse.cdt.core.cnature</nature>
+		<nature>org.eclipse.cdt.managedbuilder.core.managedBuildNature</nature>
+		<nature>org.eclipse.cdt.managedbuilder.core.ScannerConfigNature</nature>
+		<nature>de.innot.avreclipse.core.avrnature</nature>
+	</natures>
+	<linkedResources>
+		<link>
+			<name>.cproject</name>
+			<type>1</type>
+			<location>D:/EECE/2nd Year/2nd term/Embedded Systems/Project Setup/Final Setup/.cproject</location>
+		</link>
+		<link>
+			<name>.project</name>
+			<type>1</type>
+			<location>D:/EECE/2nd Year/2nd term/Embedded Systems/Project Setup/Final Setup/.project</location>
+		</link>
+		<link>
+			<name>.settings</name>
+			<type>2</type>
+			<location>D:/EECE/2nd Year/2nd term/Embedded Systems/Project Setup/Final Setup/.settings</location>
+		</link>
+		<link>
+			<name>APP</name>
+			<type>2</type>
+			<location>D:/EECE/2nd Year/2nd term/Embedded Systems/Project Setup/Final Setup/APP</location>
+		</link>
+		<link>
+			<name>Debug</name>
+			<type>2</type>
+			<location>D:/EECE/2nd Year/2nd term/Embedded Systems/Project Setup/Final Setup/Debug</location>
+		</link>
+		<link>
+			<name>HAL</name>
+			<type>2</type>
+			<location>D:/EECE/2nd Year/2nd term/Embedded Systems/Project Setup/Final Setup/HAL</location>
+		</link>
+		<link>
+			<name>LIB</name>
+			<type>2</type>
+			<location>D:/EECE/2nd Year/2nd term/Embedded Systems/Project Setup/Final Setup/LIB</location>
+		</link>
+		<link>
+			<name>MCAL</name>
+			<type>2</type>
+			<location>D:/EECE/2nd Year/2nd term/Embedded Systems/Project Setup/Final Setup/MCAL</location>
+		</link>
+		<link>
+			<name>Release</name>
+			<type>2</type>
+			<location>D:/EECE/2nd Year/2nd term/Embedded Systems/Project Setup/Final Setup/Release</location>
+		</link>
+	</linkedResources>
+</projectDescription>
