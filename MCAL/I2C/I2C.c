@@ -101,14 +101,26 @@ u8 I2C_SlaveRead(void){
 }
 
 
-u8 I2C_MasterReadAck(void){
+u8 I2C_MasterReadAck_mpu(void){
+	TWCR = (1<<TWINT) | (1<<TWEN) | (1<<TWEA);
+	while(READ_BIT(TWCR, TWINT) == 0);
+	//while(I2C_GetStatus() != 0x50);
+	return TWDR;
+}
+u8 I2C_MasterReadAck_max(void){
 	TWCR = (1<<TWINT) | (1<<TWEN) | (1<<TWEA);
 	while(READ_BIT(TWCR, TWINT) == 0);
 	while(I2C_GetStatus() != 0x50);
 	return TWDR;
 }
 
-u8 I2C_MasterReadNack(void){
+u8 I2C_MasterReadNack_mpu(void){
+	TWCR = (1<<TWINT) | (1<<TWEN);
+	while(READ_BIT(TWCR, TWINT) == 0);
+	//while(I2C_GetStatus() != 0x58);
+	return TWDR;
+}
+u8 I2C_MasterReadNack_max(void){
 	TWCR = (1<<TWINT) | (1<<TWEN);
 	while(READ_BIT(TWCR, TWINT) == 0);
 	while(I2C_GetStatus() != 0x58);

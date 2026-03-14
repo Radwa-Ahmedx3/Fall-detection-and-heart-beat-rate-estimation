@@ -13,6 +13,8 @@ RM := rm -rf
 -include MCAL/I2C/subdir.mk
 -include MCAL/DIO/subdir.mk
 -include MCAL/ADC/subdir.mk
+-include HAL/MPU_Online/subdir.mk
+-include HAL/MAX_10502/subdir.mk
 -include HAL/LED/subdir.mk
 -include HAL/LCD/subdir.mk
 -include APP/subdir.mk
@@ -42,17 +44,17 @@ $(wildcard ../makefile.init) \
 $(wildcard ../makefile.targets) \
 
 
-BUILD_ARTIFACT_NAME := max10502
+BUILD_ARTIFACT_NAME := Fall_detection_and_heart_beat_rate_estimation
 BUILD_ARTIFACT_EXTENSION := elf
 BUILD_ARTIFACT_PREFIX :=
 BUILD_ARTIFACT := $(BUILD_ARTIFACT_PREFIX)$(BUILD_ARTIFACT_NAME)$(if $(BUILD_ARTIFACT_EXTENSION),.$(BUILD_ARTIFACT_EXTENSION),)
 
 # Add inputs and outputs from these tool invocations to the build variables 
 LSS += \
-max10502.lss \
+Fall_detection_and_heart_beat_rate_estimation.lss \
 
 FLASH_IMAGE += \
-max10502.hex \
+Fall_detection_and_heart_beat_rate_estimation.hex \
 
 SIZEDUMMY += \
 sizedummy \
@@ -62,37 +64,37 @@ sizedummy \
 all: main-build
 
 # Main-build Target
-main-build: max10502.elf secondary-outputs
+main-build: Fall_detection_and_heart_beat_rate_estimation.elf secondary-outputs
 
 # Tool invocations
-max10502.elf: $(OBJS) $(USER_OBJS) makefile objects.mk $(OPTIONAL_TOOL_DEPS)
+Fall_detection_and_heart_beat_rate_estimation.elf: $(OBJS) $(USER_OBJS) makefile objects.mk $(OPTIONAL_TOOL_DEPS)
 	@echo 'Building target: $@'
 	@echo 'Invoking: AVR C Linker'
-	avr-gcc -Wl,-Map,max10502.map -mmcu=atmega32 -o "max10502.elf" $(OBJS) $(USER_OBJS) $(LIBS)
+	avr-gcc -Wl,-Map,Fall_detection_and_heart_beat_rate_estimation.map -mmcu=atmega32 -o "Fall_detection_and_heart_beat_rate_estimation.elf" $(OBJS) $(USER_OBJS) $(LIBS)
 	@echo 'Finished building target: $@'
 	@echo ' '
 
-max10502.lss: max10502.elf makefile objects.mk $(OPTIONAL_TOOL_DEPS)
+Fall_detection_and_heart_beat_rate_estimation.lss: Fall_detection_and_heart_beat_rate_estimation.elf makefile objects.mk $(OPTIONAL_TOOL_DEPS)
 	@echo 'Invoking: AVR Create Extended Listing'
-	-avr-objdump -h -S max10502.elf  >"max10502.lss"
+	-avr-objdump -h -S Fall_detection_and_heart_beat_rate_estimation.elf  >"Fall_detection_and_heart_beat_rate_estimation.lss"
 	@echo 'Finished building: $@'
 	@echo ' '
 
-max10502.hex: max10502.elf makefile objects.mk $(OPTIONAL_TOOL_DEPS)
+Fall_detection_and_heart_beat_rate_estimation.hex: Fall_detection_and_heart_beat_rate_estimation.elf makefile objects.mk $(OPTIONAL_TOOL_DEPS)
 	@echo 'Create Flash image (ihex format)'
-	-avr-objcopy -R .eeprom -R .fuse -R .lock -R .signature -O ihex max10502.elf  "max10502.hex"
+	-avr-objcopy -R .eeprom -R .fuse -R .lock -R .signature -O ihex Fall_detection_and_heart_beat_rate_estimation.elf  "Fall_detection_and_heart_beat_rate_estimation.hex"
 	@echo 'Finished building: $@'
 	@echo ' '
 
-sizedummy: max10502.elf makefile objects.mk $(OPTIONAL_TOOL_DEPS)
+sizedummy: Fall_detection_and_heart_beat_rate_estimation.elf makefile objects.mk $(OPTIONAL_TOOL_DEPS)
 	@echo 'Invoking: Print Size'
-	-avr-size --format=avr --mcu=atmega32 max10502.elf
+	-avr-size --format=avr --mcu=atmega32 Fall_detection_and_heart_beat_rate_estimation.elf
 	@echo 'Finished building: $@'
 	@echo ' '
 
 # Other Targets
 clean:
-	-$(RM) $(FLASH_IMAGE)$(ELFS)$(OBJS)$(ASM_DEPS)$(S_DEPS)$(SIZEDUMMY)$(S_UPPER_DEPS)$(LSS)$(C_DEPS) max10502.elf
+	-$(RM) $(FLASH_IMAGE)$(ELFS)$(OBJS)$(ASM_DEPS)$(S_DEPS)$(SIZEDUMMY)$(S_UPPER_DEPS)$(LSS)$(C_DEPS) Fall_detection_and_heart_beat_rate_estimation.elf
 	-@echo ' '
 
 secondary-outputs: $(LSS) $(FLASH_IMAGE) $(SIZEDUMMY)
