@@ -35,7 +35,5 @@ u8 I2C_SlaveRead(void);
 /* Master Receiver */
 u8 I2C_MasterReadAck(void);
 u8 I2C_MasterReadNack(void);
-u8 I2C_MasterReadAck_max(void);
-u8 I2C_MasterReadNack_max(void);
 
 #endif /* MCAL_I2C_I2C_H_ */

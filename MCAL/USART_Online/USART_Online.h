@@ -21,6 +21,5 @@ void USART_LogMPUData(float Ax, float Ay, float Az,
                       float Gx, float Gy, float Gz);
 
 void USART_SendNumber(u32 num);
-void USART_SendFloat_chato(f32 number, u8 decimal_places);
 
 #endif /* USART_RS232_H_FILE_H_ */
