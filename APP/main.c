@@ -1,10 +1,12 @@
+
 #define F_CPU 16000000UL
 //comment
 #include <util/delay.h>
 #include <stdlib.h>
 #include <avr/interrupt.h>
+#include <avr/sleep.h>
 #include <math.h>
-
+#include <avr/io.h>
 #include "../LIB/BIT_MATH.h"
 #include "../LIB/STD_TYPES.h"
 
@@ -17,6 +19,31 @@
 #include "../MCAL/DIO/DIO.h"
 #include "../MCAL/Timer1/Timer1.h"
 #include "../MCAL/USART_Online/USART_Online.h"
+
+//-------------Crystal 16MHz initialization-----------
+void setup_interrupt() {
+	DDRD &= ~(1<<PD2);
+	PORTD |= (1 << PD2);
+    MCUCR &= ~((1 << ISC01) | (1 << ISC00)); //low level interrupt
+    GICR  |= (1 << INT0);
+    sei(); //global interrupt
+}
+
+
+void enter_standby_mode() {
+    MCUCR |= (1 << SM2) | (1 << SM1) | (1 << SE);
+    MCUCR &= ~(1 << SM0);
+
+    asm volatile("sleep");
+    MCUCR &= ~(1 << SE);
+}
+
+
+
+ISR(INT0_vect) {
+
+}
+//--------------------------------------------------------
 
 uint8_t interrupt_toggle = 0;
 
@@ -56,23 +83,23 @@ int main(void) {
 	u8 fall_step = 0;
 	u16 stability_counter = 0;
 
-	/*----------------INITIALIZATION----------------*/
+//	----------------INITIALIZATION----------------
 	USART_Init(9600);
 	DIO_InitPin(DIO_PORTC, DIO_PIN5, DIO_OUTPUT);
 
-	LED_init(DIO_PORTC, DIO_PIN2);
+	LED_init(DIO_PORTC, DIO_PIN4);
 
 	LCD_init();
 
-	/* I2C and MPU6050 at address 0x68 (see MPU_6050.h) */
+	// I2C and MPU6050 at address 0x68 (see MPU_6050.h)
 	I2C_Masterinit(100000);
 	MPU6050_Online_Init();
 	MAX30102_Init();
 
-	/* Enable global interrupts if needed */
+	// Enable global interrupts if needed
 	SREG |= (1 << 7);
 
-	/* Buzzer off */
+	// Buzzer off
 	DIO_SetPinValue(DIO_PORTC, DIO_PIN5, DIO_LOW);
 
 	//-------MAX
@@ -84,8 +111,24 @@ int main(void) {
 	u16 lcdTimer = 0;
 	u32 currentIR = 0;
 
+
 	while (1) {
-		/* PHASE 1: WAIT FOR USER TAP */
+
+
+
+
+	         	DDRB |= (1 << DDB0); //toggle led
+		        // 2. Set PA0 HIGH (Turn LED ON)
+		        PORTB |= (1 << PORTB0);
+		        _delay_ms(50); // Wait 500ms
+
+		        // 3. Set PA0 LOW (Turn LED OFF)
+		        PORTB &= ~(1 << PORTB0);
+		        _delay_ms(50); // Wait 500ms
+
+
+
+		// PHASE 1: WAIT FOR USER TAP
 		USART_SendString("System Standby: Fall detection to start...\r\n");
 
 		u8 fall_detected = 0;
@@ -125,7 +168,7 @@ int main(void) {
 			LCD_movecursor(1, 9);
 			LCD_print_3_digit((u16) (Gz * 100));
 
-			/*------------------------- Algorithm -----------------------------*/
+//			------------------------- Algorithm -----------------------------
 
 			f32 Acc_Total = sqrt((Ax * Ax) + (Ay * Ay) + (Az * Az));
 
@@ -151,8 +194,11 @@ int main(void) {
 								"\r\n===================ALARM: FALL CONFIRMED!===================\r\n");
 						fall_detected = 1;
 
-						DIO_SetPinValue(DIO_PORTC, DIO_PIN5, DIO_HIGH); // Buzzer
-						LED_ON(DIO_PORTC, DIO_PIN2);
+						DDRD |= (1 << DDD6); //Buzzer On
+				        PORTD |= (1 << PORTD6);
+					    _delay_ms(100);
+					    PORTD &= ~(1 << PORTD6);
+						_delay_ms(100);
 
 						fall_step = 0;
 						stability_counter = 0;
@@ -166,6 +212,46 @@ int main(void) {
 			_delay_ms(100);
 		}
 
+////			------------------------- Tap Detection Algorithm -----------------------------
+//
+//			// Calculate the total acceleration magnitude
+//			// Normally, this is ~1.0 when sitting still
+//			f32 Acc_Total = sqrt((Ax * Ax) + (Ay * Ay) + (Az * Az));
+//
+//			// THRESHOLD: 1.5f to 2.0f is usually a good range for a table tap.
+//			// If it's too sensitive, increase to 2.5f.
+//			if (Acc_Total > 1.2f) {
+//
+//			    // 1. Send Debug message
+//			    USART_SendString("\r\n !!! TAP DETECTED !!! \r\n");
+//			    USART_SendString("Magnitude: ");
+//			    USART_SendFloat_chato(Acc_Total, 2);
+//			    USART_SendString("\r\n");
+//			    fall_detected = 1;
+//
+//			    // 2. Visual/Audio Feedback
+//			    DIO_SetPinValue(DIO_PORTC, DIO_PIN5, DIO_HIGH); // Buzzer ON
+//
+//			    DDRD |= (1 << DDD6); //Buzzer On
+//			    PORTD |= (1 << PORTD6);
+//			    _delay_ms(100);
+//			    PORTD &= ~(1 << PORTD6);
+//			    _delay_ms(100);
+//
+//
+//			    // 3. Keep the alarm on long enough to see/hear it
+//			    //_delay_ms(1000);
+//
+//			    // 4. Reset indicators
+//			    DIO_SetPinValue(DIO_PORTC, DIO_PIN5, DIO_LOW);  // Buzzer OFF
+//			    //LED_OFF(DIO_PORTC, DIO_PIN2);                  // LED OFF (if your driver has LED_OFF)
+//			}
+//
+//			// Short delay to prevent one physical tap from triggering
+//			 //  the 'if' statement multiple times (Debouncing).
+//
+//			_delay_ms(50);
+//		}
 //=================================MAX while loop=================================
 		while (1) {
 
@@ -235,3 +321,31 @@ int main(void) {
 
 	return 0;
 }
+
+
+
+
+/*
+
+#define F_CPU 16000000UL // Set clock speed (1MHz is default for ATmega32)
+#include <avr/io.h>
+#include <util/delay.h>
+
+int main(void) {
+    // 1. Set PA0 as an output
+    // DDRA is the Data Direction Register for Port A
+    DDRB |= (1 << DDB0);
+
+    while (1) {
+        // 2. Set PA0 HIGH (Turn LED ON)
+        PORTB |= (1 << PORTB0);
+        _delay_ms(50); // Wait 500ms
+
+        // 3. Set PA0 LOW (Turn LED OFF)
+        PORTB &= ~(1 << PORTB0);
+        _delay_ms(50); // Wait 500ms
+    }
+
+    return 0; // Should never reach here
+}
+*/

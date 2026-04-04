@@ -1,0 +1,11 @@
+HAL/MPU/MPU_6050.o HAL/MPU/MPU_6050.o: ../HAL/MPU/MPU_6050.c \
+  ../HAL/MPU/MPU_6050.h ../HAL/MPU/../../LIB/STD_TYPES.h \
+  ../HAL/MPU/../../MCAL/I2C/I2C.h ../HAL/MPU/../../LIB/BIT_MATH.h
+
+../HAL/MPU/MPU_6050.h:
+
+../HAL/MPU/../../LIB/STD_TYPES.h:
+
+../HAL/MPU/../../MCAL/I2C/I2C.h:
+
+../HAL/MPU/../../LIB/BIT_MATH.h:
