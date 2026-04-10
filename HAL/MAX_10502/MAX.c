@@ -56,9 +56,9 @@ u32 MAX30102_ReadIR(void){
     I2C_SendStartCond();                // Repeated start
     I2C_SendAdd(MAX30102_READ_ADDR);    // Read mode
 
-    b1 = I2C_MasterReadAck();
-    b2 = I2C_MasterReadAck();
-    b3 = I2C_MasterReadNack();
+    b1 = I2C_MasterReadAck_max();
+    b2 = I2C_MasterReadAck_max();
+    b3 = I2C_MasterReadNack_max();
     I2C_SendStopCond();
 
     ir = ((u32)b1 << 16) | ((u32)b2 << 8) | b3;

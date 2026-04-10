@@ -8,14 +8,15 @@ RM := rm -rf
 
 # All of the sources participating in the build are defined here
 -include sources.mk
+-include MCAL/USART_Online/subdir.mk
 -include MCAL/Timer1/subdir.mk
 -include MCAL/I2C/subdir.mk
 -include MCAL/DIO/subdir.mk
 -include MCAL/ADC/subdir.mk
--include HAL/MPU/subdir.mk
+-include HAL/MPU_Online/subdir.mk
+-include HAL/MAX_10502/subdir.mk
 -include HAL/LED/subdir.mk
 -include HAL/LCD/subdir.mk
--include HAL/KEY_PAD/subdir.mk
 -include APP/subdir.mk
 -include subdir.mk
 -include objects.mk
@@ -37,63 +38,85 @@ endif
 
 -include ../makefile.defs
 
+OPTIONAL_TOOL_DEPS := \
+$(wildcard ../makefile.defs) \
+$(wildcard ../makefile.init) \
+$(wildcard ../makefile.targets) \
+
+
+BUILD_ARTIFACT_NAME := Fall_detection_and_heart_beat_rate_estimation
+BUILD_ARTIFACT_EXTENSION := elf
+BUILD_ARTIFACT_PREFIX :=
+BUILD_ARTIFACT := $(BUILD_ARTIFACT_PREFIX)$(BUILD_ARTIFACT_NAME)$(if $(BUILD_ARTIFACT_EXTENSION),.$(BUILD_ARTIFACT_EXTENSION),)
+
 # Add inputs and outputs from these tool invocations to the build variables 
 LSS += \
-p1.lss \
+Fall_detection_and_heart_beat_rate_estimation.lss \
 
 FLASH_IMAGE += \
-p1.hex \
+Fall_detection_and_heart_beat_rate_estimation.hex \
 
 EEPROM_IMAGE += \
-p1.eep \
+Fall_detection_and_heart_beat_rate_estimation.eep \
 
 SIZEDUMMY += \
 sizedummy \
 
+AVRDUDEDUMMY += \
+avrdudedummy \
+
 
 # All Target
-all: p1.elf secondary-outputs
+all: main-build
+
+# Main-build Target
+main-build: Fall_detection_and_heart_beat_rate_estimation.elf secondary-outputs
 
 # Tool invocations
-p1.elf: $(OBJS) $(USER_OBJS)
+Fall_detection_and_heart_beat_rate_estimation.elf: $(OBJS) $(USER_OBJS) makefile objects.mk $(OPTIONAL_TOOL_DEPS)
 	@echo 'Building target: $@'
 	@echo 'Invoking: AVR C Linker'
-	avr-gcc -Wl,-Map,p1.map -mmcu=atmega32 -o "p1.elf" $(OBJS) $(USER_OBJS) $(LIBS)
+	avr-gcc -Wl,-Map,Fall_detection_and_heart_beat_rate_estimation.map -mmcu=atmega32 -o "Fall_detection_and_heart_beat_rate_estimation.elf" $(OBJS) $(USER_OBJS) $(LIBS)
 	@echo 'Finished building target: $@'
 	@echo ' '
 
-p1.lss: p1.elf
+Fall_detection_and_heart_beat_rate_estimation.lss: Fall_detection_and_heart_beat_rate_estimation.elf makefile objects.mk $(OPTIONAL_TOOL_DEPS)
 	@echo 'Invoking: AVR Create Extended Listing'
-	-avr-objdump -h -S p1.elf  >"p1.lss"
+	-avr-objdump -h -S Fall_detection_and_heart_beat_rate_estimation.elf  >"Fall_detection_and_heart_beat_rate_estimation.lss"
 	@echo 'Finished building: $@'
 	@echo ' '
 
-p1.hex: p1.elf
+Fall_detection_and_heart_beat_rate_estimation.hex: Fall_detection_and_heart_beat_rate_estimation.elf makefile objects.mk $(OPTIONAL_TOOL_DEPS)
 	@echo 'Create Flash image (ihex format)'
-	-avr-objcopy -R .eeprom -R .fuse -R .lock -R .signature -O ihex p1.elf  "p1.hex"
+	-avr-objcopy -R .eeprom -R .fuse -R .lock -R .signature -O ihex Fall_detection_and_heart_beat_rate_estimation.elf  "Fall_detection_and_heart_beat_rate_estimation.hex"
 	@echo 'Finished building: $@'
 	@echo ' '
 
-p1.eep: p1.elf
+Fall_detection_and_heart_beat_rate_estimation.eep: Fall_detection_and_heart_beat_rate_estimation.elf makefile objects.mk $(OPTIONAL_TOOL_DEPS)
 	@echo 'Create eeprom image (ihex format)'
-	-avr-objcopy -j .eeprom --no-change-warnings --change-section-lma .eeprom=0 -O ihex p1.elf  "p1.eep"
+	-avr-objcopy -j .eeprom --no-change-warnings --change-section-lma .eeprom=0 -O ihex Fall_detection_and_heart_beat_rate_estimation.elf  "Fall_detection_and_heart_beat_rate_estimation.eep"
 	@echo 'Finished building: $@'
 	@echo ' '
 
-sizedummy: p1.elf
+sizedummy: Fall_detection_and_heart_beat_rate_estimation.elf makefile objects.mk $(OPTIONAL_TOOL_DEPS)
 	@echo 'Invoking: Print Size'
-	-avr-size --format=avr --mcu=atmega32 p1.elf
+	-avr-size --format=avr --mcu=atmega32 Fall_detection_and_heart_beat_rate_estimation.elf
+	@echo 'Finished building: $@'
+	@echo ' '
+
+avrdudedummy: Fall_detection_and_heart_beat_rate_estimation.elf makefile objects.mk $(OPTIONAL_TOOL_DEPS)
+	@echo 'Invoking: AVRDude'
+	C:\WinAVR-20100110\bin\avrdude -pm32 -cusbasp -Pusb -B 32 -u -Uflash:w:Fall_detection_and_heart_beat_rate_estimation.hex:a -Ueeprom:w:Fall_detection_and_heart_beat_rate_estimation.eep:a -Ulfuse:w:0xff:m -Uhfuse:w:0x99:m
 	@echo 'Finished building: $@'
 	@echo ' '
 
 # Other Targets
 clean:
-	-$(RM) $(FLASH_IMAGE)$(ELFS)$(OBJS)$(ASM_DEPS)$(EEPROM_IMAGE)$(S_DEPS)$(SIZEDUMMY)$(S_UPPER_DEPS)$(LSS)$(C_DEPS) p1.elf
+	-$(RM) $(FLASH_IMAGE)$(ELFS)$(OBJS)$(ASM_DEPS)$(EEPROM_IMAGE)$(AVRDUDEDUMMY)$(S_DEPS)$(SIZEDUMMY)$(S_UPPER_DEPS)$(LSS)$(C_DEPS) Fall_detection_and_heart_beat_rate_estimation.elf
 	-@echo ' '
 
-secondary-outputs: $(LSS) $(FLASH_IMAGE) $(EEPROM_IMAGE) $(SIZEDUMMY)
+secondary-outputs: $(LSS) $(FLASH_IMAGE) $(EEPROM_IMAGE) $(SIZEDUMMY) $(AVRDUDEDUMMY)
 
-.PHONY: all clean dependents
-.SECONDARY:
+.PHONY: all clean dependents main-build
 
 -include ../makefile.targets
