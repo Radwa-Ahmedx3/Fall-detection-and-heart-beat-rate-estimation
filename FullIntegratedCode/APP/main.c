@@ -26,7 +26,7 @@
 
 // --- Global Variables ---
 volatile u32 g_millis = 0;
-volatile u8 g_max_trigger_flag = 0; // The "Bridge" between ISR and Main
+volatile u8 g_max_trigger_flag = 0;
 
 u8 rates[RATE_SIZE];
 u8 rateSpot = 0;
@@ -36,14 +36,14 @@ u8 beatAvg;
 
 // --- Interrupt Logic ---
 void setup_interrupt() {
-    DDRD &= ~(1 << PD2); // PD2 as input
-    PORTD |= (1 << PD2); // Internal pull-up
-    MCUCR &= ~((1 << ISC01) | (1 << ISC00)); // Low level trigger
-    GICR |= (1 << INT0); // Enable INT0
+    DDRD &= ~(1 << PD2);
+    PORTD |= (1 << PD2);
+    MCUCR &= ~((1 << ISC01) | (1 << ISC00));
+    GICR |= (1 << INT0);
 }
 
 ISR(INT0_vect) {
-    g_max_trigger_flag = 1; // Signal the main loop to switch
+    g_max_trigger_flag = 1;
 }
 
 ISR(TIMER1_COMPA_vect) {
@@ -56,7 +56,6 @@ u32 millis(void) {
     return m;
 }
 
-// --- MAIN CODE ---
 int main(void) {
     // Local variables
     f32 Ax, Ay, Az, Gx, Gy, Gz;
@@ -65,20 +64,28 @@ int main(void) {
     u16 lcdTimer = 0;
     u32 currentIR = 0;
 
-    // 1. Initial Hardware Setup
+    // --- Hardware Initialization ---
     I2C_Masterinit(100000);
     USART_Init(9600);
     LCD_init();
-    MPU6050_Online_Init(); // Only init MPU at start
+    MPU6050_Online_Init();
     setup_interrupt();
+
+    // LED Port Configuration
+    DDRB |= (1 << PB0);          // Output for "Always Lit" LED
+    DDRD |= (1 << PD6) | (1 << PD7); // Outputs for Fall/Stability and MAX init
+
+    // Initial State: All LEDs except PB0 off (PB0 lit immediately)
+    PORTB |= (1 << PB0);         // PB0 Always Lit
+    PORTD &= ~(1 << PD6);        // PD6 Initially Off
+    PORTD &= ~(1 << PD7);        // PD7 Initially Off
 
     Timer1_Init(TIMER1_PRESCALLER64, TIMER1_CTC);
     OCR1A = 249;
-    SET_BIT(TIMSK, 4); // Enable Timer Interrupt
-    sei();             // Enable Global Interrupts
+    SET_BIT(TIMSK, 4);
+    sei();
 
     DIO_InitPin(DIO_PORTC, DIO_PIN5, DIO_OUTPUT); // Buzzer
-    DDRB |= (1 << DDB0); // Indicator LED
 
     while (1) {
         u8 fall_detected = 0;
@@ -86,17 +93,15 @@ int main(void) {
 
         // ================= MPU MONITORING MODE =================
         while (fall_detected == 0) {
-            // Check if the ISR has requested the MAX sensor
             if (g_max_trigger_flag == 1) {
                 g_max_trigger_flag = 0;
-                fall_detected = 1; // Exit MPU loop
+                fall_detected = 1;
                 break;
             }
 
             Read_Accel(&Ax, &Ay, &Az);
             Read_Gyro(&Gx, &Gy, &Gz);
 
-            // Display MPU Data
             LCD_movecursor(0, 0);
             LCD_print_3_digit((u16)(Ax * 100));
             LCD_movecursor(1, 0);
@@ -108,6 +113,7 @@ int main(void) {
             // Standard Fall Detection Logic
             if (Acc_Total < 0.4f && fall_step == 0) {
                 fall_step = 1;
+                // Chirp buzzer
                 PORTD |= (1 << PORTD6); _delay_ms(100); PORTD &= ~(1 << PORTD6);
             }
             if (fall_step == 1 && Acc_Total > 2.5f) {
@@ -117,24 +123,34 @@ int main(void) {
             if (fall_step == 2) {
                 if (Acc_Total > 0.8f && Acc_Total < 1.2f) {
                     stability_counter++;
-                    if (stability_counter >= 20) { fall_detected = 1; }
-                } else { fall_step = 0; stability_counter = 0; }
+                    if (stability_counter >= 20) {
+                        fall_detected = 1;
+                        PORTD |= (1 << PD6); // LED ON: Detected Fall/Stability
+                    }
+                } else {
+                    fall_step = 0;
+                    stability_counter = 0;
+                    PORTD &= ~(1 << PD6); // Reset LED if stability lost
+                }
             }
 
-            // Long Stability detection (The "Sleep" trigger)
+            // Long Stability detection
             if (fall_step == 0) {
                 if (Acc_Total > 0.95f && Acc_Total < 1.05f && Gyro_Total < 5.0f) {
                     long_stability_counter++;
                     if (long_stability_counter >= LONG_STABILITY_COUNT) {
                         fall_detected = 1;
+                        PORTD |= (1 << PD6); // LED ON: Detected Stability
                     }
-                } else { long_stability_counter = 0; }
+                } else {
+                    long_stability_counter = 0;
+                }
             }
             _delay_ms(50);
         }
 
         // ================= MAX VITALS MODE =================
-        // Initialize the MAX30102 only when we enter this mode
+        PORTD |= (1 << PD7);  // LED ON: MAX sensor initializing/Active
         MAX30102_Init();
         LCD_clear();
         LCD_writestr("Checking Vitals");
@@ -170,7 +186,6 @@ int main(void) {
                 lcdTimer = 0;
             }
 
-            // Exit Criteria
             if (beatAvg >= 45 && beatAvg <= 150) {
                 if (valid_since == 0) valid_since = now;
                 else if (now - valid_since >= VALID_READING_HOLD_MS) session_done = 1;
@@ -181,7 +196,10 @@ int main(void) {
             _delay_ms(10);
         }
 
-        // Reset all states before returning to MPU mode
+        // Reset all states and turn off task-specific LEDs
+        PORTD &= ~(1 << PD6);
+        PORTD &= ~(1 << PD7);
+
         fall_step = 0;
         stability_counter = 0;
         beatAvg = 0;

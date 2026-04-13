@@ -367,3 +367,196 @@ Data:        636 bytes (31.1% Full)
 
 Finished building: sizedummy
  
+16:40:49 **** Incremental Build of configuration Debug for project FullIntegratedCode ****
+make all 
+Building file: ../APP/main.c
+Invoking: AVR Compiler
+avr-gcc -Wall -g2 -gstabs -O0 -fpack-struct -fshort-enums -ffunction-sections -fdata-sections -std=gnu99 -funsigned-char -funsigned-bitfields -mmcu=atmega32 -DF_CPU=16000000UL -MMD -MP -MF"APP/main.d" -MT"APP/main.o" -c -o "APP/main.o" "../APP/main.c"
+In file included from ../APP/main.c:2:
+c:/winavr-20100110/lib/gcc/../../avr/include/util/delay.h:90:3: warning: #warning "Compiler optimizations disabled; functions from <util/delay.h> won't work as designed"
+In file included from ../APP/main.c:15:
+../APP/../MCAL/I2C/I2C.h:11:1: warning: "TWBR" redefined
+In file included from c:/winavr-20100110/lib/gcc/../../avr/include/avr/io.h:206,
+                 from c:/winavr-20100110/lib/gcc/../../avr/include/avr/interrupt.h:38,
+                 from ../APP/main.c:4:
+c:/winavr-20100110/lib/gcc/../../avr/include/avr/iom32.h:53:1: warning: this is the location of the previous definition
+In file included from ../APP/main.c:15:
+../APP/../MCAL/I2C/I2C.h:12:1: warning: "TWCR" redefined
+In file included from c:/winavr-20100110/lib/gcc/../../avr/include/avr/io.h:206,
+                 from c:/winavr-20100110/lib/gcc/../../avr/include/avr/interrupt.h:38,
+                 from ../APP/main.c:4:
+c:/winavr-20100110/lib/gcc/../../avr/include/avr/iom32.h:154:1: warning: this is the location of the previous definition
+In file included from ../APP/main.c:15:
+../APP/../MCAL/I2C/I2C.h:13:1: warning: "TWSR" redefined
+In file included from c:/winavr-20100110/lib/gcc/../../avr/include/avr/io.h:206,
+                 from c:/winavr-20100110/lib/gcc/../../avr/include/avr/interrupt.h:38,
+                 from ../APP/main.c:4:
+c:/winavr-20100110/lib/gcc/../../avr/include/avr/iom32.h:54:1: warning: this is the location of the previous definition
+In file included from ../APP/main.c:15:
+../APP/../MCAL/I2C/I2C.h:14:1: warning: "TWDR" redefined
+In file included from c:/winavr-20100110/lib/gcc/../../avr/include/avr/io.h:206,
+                 from c:/winavr-20100110/lib/gcc/../../avr/include/avr/interrupt.h:38,
+                 from ../APP/main.c:4:
+c:/winavr-20100110/lib/gcc/../../avr/include/avr/iom32.h:56:1: warning: this is the location of the previous definition
+In file included from ../APP/main.c:15:
+../APP/../MCAL/I2C/I2C.h:15:1: warning: "TWAR" redefined
+In file included from c:/winavr-20100110/lib/gcc/../../avr/include/avr/io.h:206,
+                 from c:/winavr-20100110/lib/gcc/../../avr/include/avr/interrupt.h:38,
+                 from ../APP/main.c:4:
+c:/winavr-20100110/lib/gcc/../../avr/include/avr/iom32.h:55:1: warning: this is the location of the previous definition
+In file included from ../APP/main.c:16:
+../APP/../MCAL/DIO/DIO.h:11:1: warning: "DDRA" redefined
+In file included from c:/winavr-20100110/lib/gcc/../../avr/include/avr/io.h:206,
+                 from c:/winavr-20100110/lib/gcc/../../avr/include/avr/interrupt.h:38,
+                 from ../APP/main.c:4:
+c:/winavr-20100110/lib/gcc/../../avr/include/avr/iom32.h:99:1: warning: this is the location of the previous definition
+In file included from ../APP/main.c:16:
+../APP/../MCAL/DIO/DIO.h:12:1: warning: "PORTA" redefined
+In file included from c:/winavr-20100110/lib/gcc/../../avr/include/avr/io.h:206,
+                 from c:/winavr-20100110/lib/gcc/../../avr/include/avr/interrupt.h:38,
+                 from ../APP/main.c:4:
+c:/winavr-20100110/lib/gcc/../../avr/include/avr/iom32.h:100:1: warning: this is the location of the previous definition
+In file included from ../APP/main.c:16:
+../APP/../MCAL/DIO/DIO.h:13:1: warning: "PINA" redefined
+In file included from c:/winavr-20100110/lib/gcc/../../avr/include/avr/io.h:206,
+                 from c:/winavr-20100110/lib/gcc/../../avr/include/avr/interrupt.h:38,
+                 from ../APP/main.c:4:
+c:/winavr-20100110/lib/gcc/../../avr/include/avr/iom32.h:98:1: warning: this is the location of the previous definition
+In file included from ../APP/main.c:16:
+../APP/../MCAL/DIO/DIO.h:15:1: warning: "DDRB" redefined
+In file included from c:/winavr-20100110/lib/gcc/../../avr/include/avr/io.h:206,
+                 from c:/winavr-20100110/lib/gcc/../../avr/include/avr/interrupt.h:38,
+                 from ../APP/main.c:4:
+c:/winavr-20100110/lib/gcc/../../avr/include/avr/iom32.h:94:1: warning: this is the location of the previous definition
+In file included from ../APP/main.c:16:
+../APP/../MCAL/DIO/DIO.h:16:1: warning: "PORTB" redefined
+In file included from c:/winavr-20100110/lib/gcc/../../avr/include/avr/io.h:206,
+                 from c:/winavr-20100110/lib/gcc/../../avr/include/avr/interrupt.h:38,
+                 from ../APP/main.c:4:
+c:/winavr-20100110/lib/gcc/../../avr/include/avr/iom32.h:95:1: warning: this is the location of the previous definition
+In file included from ../APP/main.c:16:
+../APP/../MCAL/DIO/DIO.h:17:1: warning: "PINB" redefined
+In file included from c:/winavr-20100110/lib/gcc/../../avr/include/avr/io.h:206,
+                 from c:/winavr-20100110/lib/gcc/../../avr/include/avr/interrupt.h:38,
+                 from ../APP/main.c:4:
+c:/winavr-20100110/lib/gcc/../../avr/include/avr/iom32.h:93:1: warning: this is the location of the previous definition
+In file included from ../APP/main.c:16:
+../APP/../MCAL/DIO/DIO.h:19:1: warning: "DDRC" redefined
+In file included from c:/winavr-20100110/lib/gcc/../../avr/include/avr/io.h:206,
+                 from c:/winavr-20100110/lib/gcc/../../avr/include/avr/interrupt.h:38,
+                 from ../APP/main.c:4:
+c:/winavr-20100110/lib/gcc/../../avr/include/avr/iom32.h:89:1: warning: this is the location of the previous definition
+In file included from ../APP/main.c:16:
+../APP/../MCAL/DIO/DIO.h:20:1: warning: "PORTC" redefined
+In file included from c:/winavr-20100110/lib/gcc/../../avr/include/avr/io.h:206,
+                 from c:/winavr-20100110/lib/gcc/../../avr/include/avr/interrupt.h:38,
+                 from ../APP/main.c:4:
+c:/winavr-20100110/lib/gcc/../../avr/include/avr/iom32.h:90:1: warning: this is the location of the previous definition
+In file included from ../APP/main.c:16:
+../APP/../MCAL/DIO/DIO.h:21:1: warning: "PINC" redefined
+In file included from c:/winavr-20100110/lib/gcc/../../avr/include/avr/io.h:206,
+                 from c:/winavr-20100110/lib/gcc/../../avr/include/avr/interrupt.h:38,
+                 from ../APP/main.c:4:
+c:/winavr-20100110/lib/gcc/../../avr/include/avr/iom32.h:88:1: warning: this is the location of the previous definition
+In file included from ../APP/main.c:16:
+../APP/../MCAL/DIO/DIO.h:23:1: warning: "DDRD" redefined
+In file included from c:/winavr-20100110/lib/gcc/../../avr/include/avr/io.h:206,
+                 from c:/winavr-20100110/lib/gcc/../../avr/include/avr/interrupt.h:38,
+                 from ../APP/main.c:4:
+c:/winavr-20100110/lib/gcc/../../avr/include/avr/iom32.h:84:1: warning: this is the location of the previous definition
+In file included from ../APP/main.c:16:
+../APP/../MCAL/DIO/DIO.h:24:1: warning: "PORTD" redefined
+In file included from c:/winavr-20100110/lib/gcc/../../avr/include/avr/io.h:206,
+                 from c:/winavr-20100110/lib/gcc/../../avr/include/avr/interrupt.h:38,
+                 from ../APP/main.c:4:
+c:/winavr-20100110/lib/gcc/../../avr/include/avr/iom32.h:85:1: warning: this is the location of the previous definition
+In file included from ../APP/main.c:16:
+../APP/../MCAL/DIO/DIO.h:25:1: warning: "PIND" redefined
+In file included from c:/winavr-20100110/lib/gcc/../../avr/include/avr/io.h:206,
+                 from c:/winavr-20100110/lib/gcc/../../avr/include/avr/interrupt.h:38,
+                 from ../APP/main.c:4:
+c:/winavr-20100110/lib/gcc/../../avr/include/avr/iom32.h:83:1: warning: this is the location of the previous definition
+In file included from ../APP/main.c:17:
+../APP/../MCAL/Timer1/Timer1.h:5:1: warning: "TCCR1A" redefined
+In file included from c:/winavr-20100110/lib/gcc/../../avr/include/avr/io.h:206,
+                 from c:/winavr-20100110/lib/gcc/../../avr/include/avr/interrupt.h:38,
+                 from ../APP/main.c:4:
+c:/winavr-20100110/lib/gcc/../../avr/include/avr/iom32.h:139:1: warning: this is the location of the previous definition
+In file included from ../APP/main.c:17:
+../APP/../MCAL/Timer1/Timer1.h:6:1: warning: "TCCR1B" redefined
+In file included from c:/winavr-20100110/lib/gcc/../../avr/include/avr/io.h:206,
+                 from c:/winavr-20100110/lib/gcc/../../avr/include/avr/interrupt.h:38,
+                 from ../APP/main.c:4:
+c:/winavr-20100110/lib/gcc/../../avr/include/avr/iom32.h:138:1: warning: this is the location of the previous definition
+In file included from ../APP/main.c:17:
+../APP/../MCAL/Timer1/Timer1.h:7:1: warning: "TCNT1" redefined
+In file included from c:/winavr-20100110/lib/gcc/../../avr/include/avr/io.h:206,
+                 from c:/winavr-20100110/lib/gcc/../../avr/include/avr/interrupt.h:38,
+                 from ../APP/main.c:4:
+c:/winavr-20100110/lib/gcc/../../avr/include/avr/iom32.h:135:1: warning: this is the location of the previous definition
+In file included from ../APP/main.c:17:
+../APP/../MCAL/Timer1/Timer1.h:8:1: warning: "OCR1A" redefined
+In file included from c:/winavr-20100110/lib/gcc/../../avr/include/avr/io.h:206,
+                 from c:/winavr-20100110/lib/gcc/../../avr/include/avr/interrupt.h:38,
+                 from ../APP/main.c:4:
+c:/winavr-20100110/lib/gcc/../../avr/include/avr/iom32.h:132:1: warning: this is the location of the previous definition
+In file included from ../APP/main.c:17:
+../APP/../MCAL/Timer1/Timer1.h:9:1: warning: "OCR1B" redefined
+In file included from c:/winavr-20100110/lib/gcc/../../avr/include/avr/io.h:206,
+                 from c:/winavr-20100110/lib/gcc/../../avr/include/avr/interrupt.h:38,
+                 from ../APP/main.c:4:
+c:/winavr-20100110/lib/gcc/../../avr/include/avr/iom32.h:129:1: warning: this is the location of the previous definition
+In file included from ../APP/main.c:17:
+../APP/../MCAL/Timer1/Timer1.h:10:1: warning: "ICR1" redefined
+In file included from c:/winavr-20100110/lib/gcc/../../avr/include/avr/io.h:206,
+                 from c:/winavr-20100110/lib/gcc/../../avr/include/avr/interrupt.h:38,
+                 from ../APP/main.c:4:
+c:/winavr-20100110/lib/gcc/../../avr/include/avr/iom32.h:126:1: warning: this is the location of the previous definition
+In file included from ../APP/main.c:17:
+../APP/../MCAL/Timer1/Timer1.h:11:1: warning: "TIMSK" redefined
+In file included from c:/winavr-20100110/lib/gcc/../../avr/include/avr/io.h:206,
+                 from c:/winavr-20100110/lib/gcc/../../avr/include/avr/interrupt.h:38,
+                 from ../APP/main.c:4:
+c:/winavr-20100110/lib/gcc/../../avr/include/avr/iom32.h:159:1: warning: this is the location of the previous definition
+In file included from ../APP/main.c:17:
+../APP/../MCAL/Timer1/Timer1.h:12:1: warning: "TIFR" redefined
+In file included from c:/winavr-20100110/lib/gcc/../../avr/include/avr/io.h:206,
+                 from c:/winavr-20100110/lib/gcc/../../avr/include/avr/interrupt.h:38,
+                 from ../APP/main.c:4:
+c:/winavr-20100110/lib/gcc/../../avr/include/avr/iom32.h:158:1: warning: this is the location of the previous definition
+In file included from ../APP/main.c:17:
+../APP/../MCAL/Timer1/Timer1.h:13:1: warning: "SREG" redefined
+In file included from c:/winavr-20100110/lib/gcc/../../avr/include/avr/io.h:410,
+                 from c:/winavr-20100110/lib/gcc/../../avr/include/avr/interrupt.h:38,
+                 from ../APP/main.c:4:
+c:/winavr-20100110/lib/gcc/../../avr/include/avr/common.h:103:1: warning: this is the location of the previous definition
+../APP/main.c: In function 'main':
+../APP/main.c:156: warning: pointer targets in passing argument 1 of 'LCD_writestr' differ in signedness
+../APP/main.c: At top level:
+../APP/../HAL/LCD/LCD.h:29: warning: 'lcd_sendData' declared 'static' but never defined
+Finished building: ../APP/main.c
+ 
+Building target: FullIntegratedCode.elf
+Invoking: AVR C Linker
+avr-gcc -Wl,-Map,FullIntegratedCode.map -mmcu=atmega32 -o "FullIntegratedCode.elf"  ./MCAL/USART_Online/USART_Online.o  ./MCAL/Timer1/Timer1.o  ./MCAL/I2C/I2C.o  ./MCAL/DIO/DIO.o  ./MCAL/ADC/ADC.o  ./HAL/MPU_Online/MPU_Online.o  ./HAL/MAX_10502/MAX.o  ./HAL/LED/LED.o  ./HAL/LCD/LCD.o  ./APP/main.o   
+Finished building target: FullIntegratedCode.elf
+ 
+Invoking: AVR Create Extended Listing
+avr-objdump -h -S FullIntegratedCode.elf  >"FullIntegratedCode.lss"
+Finished building: FullIntegratedCode.lss
+ 
+Invoking: Print Size
+avr-size --format=avr --mcu=atmega32 FullIntegratedCode.elf
+AVR Memory Usage
+----------------
+Device: atmega32
+
+Program:   28222 bytes (86.1% Full)
+(.text + .data + .bootloader)
+
+Data:        636 bytes (31.1% Full)
+(.data + .bss + .noinit)
+
+
+Finished building: sizedummy
+ 
