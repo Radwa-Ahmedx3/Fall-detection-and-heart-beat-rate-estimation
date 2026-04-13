@@ -43,6 +43,7 @@ void MAX30102_Init(void);
 u32 MAX30102_ReadIR(void);
 u8 checkForBeat(u32 irValue);
 void send_to_blynk(u8 bpm, const char* status);
+void trigger_blynk_event(const char* event_code);
 void update_display(u8 avgBPM, u32 rawIR);
 
 /* Timer Interrupt for Millis */
@@ -106,6 +107,7 @@ int main(void) {
 
     u32 lastBlynkUpdate = 0;
     u8 lastSentBPM = 255;
+    u8 high_bpm_alert_sent = 0; // Flag to prevent spamming notifications
     u32 currentIR = 0;
     u16 printTimer = 0;
 
@@ -189,12 +191,24 @@ int main(void) {
                 UART_SendNumber(beatAvg);
                 UART_SendString(" | Status: ");
 
-                // Remove the URL-encoded %20 just for the terminal print so it looks clean
                 if(currentIR < 50000) UART_SendString("No Finger");
                 else UART_SendString(blynkStatus);
 
                 UART_SendString("\r\n");
+
+                _delay_ms(100); // Small pause for the ESP8266 to breathe
             }
+
+            // --- EVENT TRIGGER LOGIC ---
+            if (beatAvg > 200 && high_bpm_alert_sent == 0) {
+                UART_SendString(">> DANGER: BPM > 200! Triggering Blynk Event...\r\n");
+                trigger_blynk_event("high_bpm");
+                high_bpm_alert_sent = 1; // Lock flag so we don't spam notifications
+            } else if (beatAvg <= 200) {
+                // Reset the flag once the heart rate normalizes
+                high_bpm_alert_sent = 0;
+            }
+
             lastBlynkUpdate = now;
         }
 
@@ -277,12 +291,32 @@ void UART_Flush(void) {
 }
 
 void send_to_blynk(u8 bpm, const char* status) {
-    // Increased buffer size to 200 to accommodate the extra v0 pin data
     char httpRequest[200];
     char cipSendCmd[30];
 
-    // Pushing v1 (BPM) and v0 (Status text) simultaneously
+    // USING THE CORRECT BATCH UPDATE URL
     sprintf(httpRequest, "GET /external/api/batch/update?token=%s&v1=%d&v0=%s HTTP/1.0\r\nHost: blynk.cloud\r\n\r\n", BLYNK_AUTH_TOKEN, bpm, status);
+
+    UART_Flush();
+    UART_SendString("AT+CIPSTART=\"TCP\",\"blynk.cloud\",80\r\n");
+    if (UART_WaitFor("CONNECT")) {
+        sprintf(cipSendCmd, "AT+CIPSEND=%d\r\n", (int)strlen(httpRequest));
+        UART_SendString(cipSendCmd);
+        if (UART_WaitFor(">")) {
+            UART_SendString(httpRequest);
+            UART_WaitFor("SEND OK");
+        }
+    }
+    UART_SendString("AT+CIPCLOSE\r\n");
+}
+
+/* --- New Event Trigger Function --- */
+void trigger_blynk_event(const char* event_code) {
+    char httpRequest[150];
+    char cipSendCmd[30];
+
+    sprintf(httpRequest, "GET /external/api/logEvent?token=%s&code=%s HTTP/1.0\r\nHost: blynk.cloud\r\n\r\n", BLYNK_AUTH_TOKEN, event_code);
+
     UART_Flush();
     UART_SendString("AT+CIPSTART=\"TCP\",\"blynk.cloud\",80\r\n");
     if (UART_WaitFor("CONNECT")) {
