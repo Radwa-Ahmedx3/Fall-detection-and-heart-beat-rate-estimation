@@ -1,0 +1,39 @@
+15:14:39 **** Incremental Build of configuration Debug for project wifi_max ****
+make all 
+Building file: ../APP/main.c
+Invoking: AVR Compiler
+avr-gcc -Wall -g2 -gstabs -Os -fpack-struct -fshort-enums -ffunction-sections -fdata-sections -std=gnu99 -funsigned-char -funsigned-bitfields -mmcu=atmega32 -DF_CPU=16000000UL -MMD -MP -MF"APP/main.d" -MT"APP/main.o" -c -o "APP/main.o" "../APP/main.c"
+../APP/../HAL/LCD/LCD.h:29: warning: 'lcd_sendData' declared 'static' but never defined
+Finished building: ../APP/main.c
+ 
+Building target: wifi_max.elf
+Invoking: AVR C Linker
+avr-gcc -Wl,-Map,wifi_max.map -mmcu=atmega32 -o "wifi_max.elf"  ./MCAL/USART_Online/USART_Online.o  ./MCAL/Timer1/Timer1.o  ./MCAL/I2C/I2C.o  ./MCAL/DIO/DIO.o  ./MCAL/ADC/ADC.o  ./HAL/LED/LED.o  ./HAL/LCD/LCD.o  ./APP/main.o   
+Finished building target: wifi_max.elf
+ 
+Invoking: AVR Create Extended Listing
+avr-objdump -h -S wifi_max.elf  >"wifi_max.lss"
+Finished building: wifi_max.lss
+ 
+Create Flash image (ihex format)
+avr-objcopy -R .eeprom -R .fuse -R .lock -R .signature -O ihex wifi_max.elf  "wifi_max.hex"
+Finished building: wifi_max.hex
+ 
+Invoking: Print Size
+avr-size --format=avr --mcu=atmega32 wifi_max.elf
+AVR Memory Usage
+----------------
+Device: atmega32
+
+Program:   15260 bytes (46.6% Full)
+(.text + .data + .bootloader)
+
+Data:       1227 bytes (59.9% Full)
+(.data + .bss + .noinit)
+
+
+Finished building: sizedummy
+ 
+
+15:14:40 Build Finished. 0 errors, 1 warnings. (took 1s.574ms)
+
