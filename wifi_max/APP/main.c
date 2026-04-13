@@ -12,6 +12,7 @@
 #include "../MCAL/DIO/DIO.h"
 #include "../MCAL/I2C/I2C.h"
 #include "../MCAL/Timer1/Timer1.h"
+#include "../HAL/LCD/LCD.h"
 
 /* Wi-Fi / Blynk Config */
 #define BAUD 115200
@@ -41,7 +42,8 @@ void UART_Flush(void);
 void MAX30102_Init(void);
 u32 MAX30102_ReadIR(void);
 u8 checkForBeat(u32 irValue);
-void send_to_blynk(u8 bpm);
+void send_to_blynk(u8 bpm, const char* status);
+void update_display(u8 avgBPM, u32 rawIR);
 
 /* Timer Interrupt for Millis */
 void __vector_7 (void) __attribute__((signal));
@@ -56,21 +58,29 @@ u32 millis(void) {
 int main(void) {
     /* 1. Hardware Initializations */
     UART_Init(MYUBRR);
+
+    LCD_init();
+    LCD_clear();
+
     I2C_Masterinit(100000);
     MAX30102_Init();
 
-    // Timer1 for 1ms ticks (CTC Mode)
     Timer1_Init(TIMER1_PRESCALLER64, TIMER1_CTC);
     OCR1A = 249;
     SET_BIT(TIMSK, 4);
     SET_BIT(SREG, 7);
 
     UART_SendString("\r\n--- System Booting ---\r\n");
+    UART_SendString("System Initialized. Place Finger...\r\n");
+
+    LCD_movecursor(0, 0);
+    LCD_writestr((u8*)"Booting Wi-Fi...");
 
     /* 2. ESP8266 / WiFi Setup */
+    UART_SendString("Checking Wi-Fi Module...\r\n");
     UART_Flush();
     UART_SendString("AT\r\n");
-    UART_WaitFor("OK");
+    if(UART_WaitFor("OK")) UART_SendString("AT OK!\r\n");
 
     UART_SendString("AT+CWMODE=1\r\n");
     UART_WaitFor("OK");
@@ -83,63 +93,106 @@ int main(void) {
     sprintf(wifi_cmd, "AT+CWJAP=\"nana\",\"01023025564\"\r\n");
     UART_SendString(wifi_cmd);
 
+    LCD_clear();
     if (UART_WaitFor("WIFI GOT IP")) {
         UART_SendString("Wi-Fi Online!\r\n");
+        LCD_writestr((u8*)"Wi-Fi Online!   ");
     } else {
-        UART_SendString("Wi-Fi Timeout/Error\r\n");
+        UART_SendString("Wi-Fi Timeout/Error (Running Offline Mode)\r\n");
+        LCD_writestr((u8*)"Wi-Fi Offline   ");
     }
+    _delay_ms(1000);
+    LCD_clear();
 
     u32 lastBlynkUpdate = 0;
+    u8 lastSentBPM = 255;
     u32 currentIR = 0;
+    u16 printTimer = 0;
 
     while(1) {
         currentIR = MAX30102_ReadIR();
         u32 now = millis();
 
-        // Data Reset Logic (No finger for 3s)
-        if (now - lastBeat > 3000 && lastBeat != 0) {
+        // Strict check to ensure finger is actually on the sensor
+        if (currentIR < 50000) {
             beatAvg = 0;
             lastBeat = 0;
             rateSpot = 0;
             for(u8 i = 0; i < RATE_SIZE; i++) rates[i] = 0;
-            UART_SendString("Sensor Timeout: Resetting BPM\r\n");
-        }
+        } else {
+            // Timeout logic (No beat detected for 3s while finger is on)
+            if (now - lastBeat > 3000 && lastBeat != 0) {
+                beatAvg = 0;
+                lastBeat = 0;
+                rateSpot = 0;
+                for(u8 i = 0; i < RATE_SIZE; i++) rates[i] = 0;
+                UART_SendString("Resetting due to inactivity...\r\n");
+            }
 
-        // Heartbeat Detection logic
-        if(checkForBeat(currentIR)) {
-            if (lastBeat == 0) {
-                lastBeat = now;
-            } else {
-                u32 delta = now - lastBeat;
-                lastBeat = now;
+            if(checkForBeat(currentIR)) {
+                if (lastBeat == 0) {
+                    lastBeat = now;
+                } else {
+                    u32 delta = now - lastBeat;
+                    lastBeat = now;
 
-                if(delta > 400 && delta < 1500) {
-                    beatsPerMinute = 60000.0 / (float)delta;
+                    if(delta > 400 && delta < 1500) {
+                        beatsPerMinute = 60000.0 / (float)delta;
 
-                    if (beatAvg == 0) {
-                        for(u8 i = 0; i < RATE_SIZE; i++) rates[i] = (u8)beatsPerMinute;
+                        if (beatAvg == 0) {
+                            for(u8 i = 0; i < RATE_SIZE; i++) rates[i] = (u8)beatsPerMinute;
+                        }
+
+                        rates[rateSpot++] = (u8)beatsPerMinute;
+                        rateSpot %= RATE_SIZE;
+
+                        u16 sum = 0;
+                        for(u8 i = 0; i < RATE_SIZE; i++) sum += rates[i];
+                        beatAvg = (u8)(sum / RATE_SIZE);
+
+                        UART_SendString("BPM Detected: ");
+                        UART_SendNumber(beatAvg);
+                        UART_SendString("\r\n");
                     }
-
-                    rates[rateSpot++] = (u8)beatsPerMinute;
-                    rateSpot %= RATE_SIZE;
-
-                    u16 sum = 0;
-                    for(u8 i = 0; i < RATE_SIZE; i++) sum += rates[i];
-                    beatAvg = (u8)(sum / RATE_SIZE);
-
-                    UART_SendString("Beat Detected! Current Avg BPM: ");
-                    UART_SendNumber(beatAvg);
-                    UART_SendString("\r\n");
                 }
             }
         }
 
-        // Upload to Blynk every 5 seconds
-        if (now - lastBlynkUpdate > 5000) {
-            if (beatAvg > 0 && currentIR > 50000) {
-                send_to_blynk(beatAvg);
-                UART_SendString(">> Sent to Blynk: ");
+        // Display current states on LCD (Every 250ms)
+        if(++printTimer >= 25) {
+            update_display(beatAvg, currentIR);
+            printTimer = 0;
+        }
+
+        // Upload to Blynk every 2 seconds
+        if (now - lastBlynkUpdate > 2000) {
+            if ((beatAvg > 0 && currentIR > 50000) || (beatAvg == 0 && lastSentBPM != 0)) {
+
+                // Determine the status string for Blynk (Using %20 for spaces in URLs)
+                const char* blynkStatus;
+                if (currentIR < 50000) {
+                    blynkStatus = "No%20Finger";
+                } else if (beatAvg == 0) {
+                    blynkStatus = "Processing...";
+                } else if (beatAvg < 60) {
+                    blynkStatus = "Low";
+                } else if (beatAvg <= 105) {
+                    blynkStatus = "Normal";
+                } else {
+                    blynkStatus = "High";
+                }
+
+                send_to_blynk(beatAvg, blynkStatus);
+                lastSentBPM = beatAvg;
+
+                UART_SendString(">> Sent to Blynk - BPM: ");
                 UART_SendNumber(beatAvg);
+                UART_SendString(" | Status: ");
+
+                // Remove the URL-encoded %20 just for the terminal print so it looks clean
+                if(currentIR < 50000) UART_SendString("No Finger");
+                else UART_SendString(blynkStatus);
+
                 UART_SendString("\r\n");
             }
             lastBlynkUpdate = now;
@@ -149,9 +202,35 @@ int main(void) {
     }
 }
 
+/* --- LCD Display Update Function --- */
+void update_display(u8 avgBPM, u32 rawIR) {
+    LCD_movecursor(0, 0);
+    LCD_writestr((u8*)"BPM: ");
+    char buffer[5];
+    itoa(avgBPM, buffer, 10);
+    LCD_writestr((u8*)buffer);
+    LCD_writestr((u8*)"   ");
+
+    LCD_movecursor(1, 0);
+
+    if (rawIR < 50000) {
+        LCD_writestr((u8*)"Place Finger    ");
+    } else {
+        if (avgBPM == 0) {
+            LCD_writestr((u8*)"Processing...   ");
+        } else if (avgBPM < 60) {
+            LCD_writestr((u8*)"Low Heart Rate  ");
+        } else if (avgBPM <= 105) {
+            LCD_writestr((u8*)"Normal Rate     ");
+        } else {
+            LCD_writestr((u8*)"High Heart Rate ");
+        }
+    }
+}
+
 /* --- UART / Communication Functions --- */
 void UART_Init(unsigned int ubrr) {
-    UCSRA = (1 << U2X); // Double speed for 115200 baud
+    UCSRA = (1 << U2X);
     UBRRH = (unsigned char)(ubrr >> 8);
     UBRRL = (unsigned char)ubrr;
     UCSRB = (1 << RXEN) | (1 << TXEN);
@@ -197,11 +276,13 @@ void UART_Flush(void) {
     while (UCSRA & (1 << RXC)) dummy = UDR;
 }
 
-void send_to_blynk(u8 bpm) {
-    char httpRequest[180];
+void send_to_blynk(u8 bpm, const char* status) {
+    // Increased buffer size to 200 to accommodate the extra v0 pin data
+    char httpRequest[200];
     char cipSendCmd[30];
-    sprintf(httpRequest, "GET /external/api/update?token=%s&v1=%d HTTP/1.0\r\nHost: blynk.cloud\r\n\r\n", BLYNK_AUTH_TOKEN, bpm);
 
+    // Pushing v1 (BPM) and v0 (Status text) simultaneously
+    sprintf(httpRequest, "GET /external/api/batch/update?token=%s&v1=%d&v0=%s HTTP/1.0\r\nHost: blynk.cloud\r\n\r\n", BLYNK_AUTH_TOKEN, bpm, status);
     UART_Flush();
     UART_SendString("AT+CIPSTART=\"TCP\",\"blynk.cloud\",80\r\n");
     if (UART_WaitFor("CONNECT")) {

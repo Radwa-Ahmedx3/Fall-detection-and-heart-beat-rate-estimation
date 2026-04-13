@@ -10,6 +10,7 @@
 #include "../DIO/DIO.h"
 #include "I2C.h"
 #include <util\delay.h>
+#include <avr/io.h>
 #include "../USART_Online/USART_Online.h"
 
 

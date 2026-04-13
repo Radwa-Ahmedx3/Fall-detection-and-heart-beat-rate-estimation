@@ -9,7 +9,7 @@
 #include "../../LIB/STD_TYPES.h"
 
 #include "DIO.h"
-
+#include <avr/io.h>
 void DIO_InitPin       (u8 PortName , u8 PinNum , u8 Mode )
 {
 	if (PortName >= DIO_PORTA && PortName <= DIO_PORTD)
