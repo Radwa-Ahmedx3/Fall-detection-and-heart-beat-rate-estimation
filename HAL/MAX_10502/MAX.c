@@ -33,17 +33,20 @@ void MAX30102_Init(void){
     I2C_SendData(0x02);
     I2C_SendStopCond();
 
+
     I2C_SendStartCond();
     I2C_SendAdd(MAX30102_WRITE_ADDR);
     I2C_SendData(0x0C);
     I2C_SendData(0x10);
     I2C_SendStopCond();
 
+
     I2C_SendStartCond();
     I2C_SendAdd(MAX30102_WRITE_ADDR);
     I2C_SendData(0x0D);
     I2C_SendData(0x1F);
     I2C_SendStopCond();
+
 }
 u32 MAX30102_ReadIR(void){
     u32 ir = 0;
@@ -60,6 +63,7 @@ u32 MAX30102_ReadIR(void){
     b2 = I2C_MasterReadAck_max();
     b3 = I2C_MasterReadNack_max();
     I2C_SendStopCond();
+    _delay_ms(10);
 
     ir = ((u32)b1 << 16) | ((u32)b2 << 8) | b3;
     ir &= 0x03FFFF;

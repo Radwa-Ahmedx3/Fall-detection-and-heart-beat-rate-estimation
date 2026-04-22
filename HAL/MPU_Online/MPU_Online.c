@@ -14,16 +14,13 @@ void MPU6050_Online_Init() {
 
 	// 1. Send Start Condition
 	I2C_SendStartCond();
-
 	// 2. Send Slave Address with Write bit
 	I2C_SendAdd(MPU_WRITE_ADDR);
 
 	// 3. Write to Power Management Register to wake up
 	I2C_SendData(PWR_MGMT_1);
-
 	// 4. Send 0 to wake it up
 	I2C_SendData(0x00);
-
 	// 5. Send Stop Condition
 	I2C_SendStopCond();
 
@@ -98,4 +95,29 @@ void Read_Gyro(f32 *Gx, f32 *Gy, f32 *Gz) {
 void Read_Temp(f32 *temp) {
 	Read_RawValue();
 	*temp = (Temperature / 340.00) + 36.53;
+}
+
+
+void Read_Accel_Only(f32 *Ax, f32 *Ay, f32 *Az) {
+    I2C_SendStartCond();
+    USART_SendString("start| ");
+    I2C_SendAdd(MPU_WRITE_ADDR);
+    USART_SendString("send add write| ");
+    I2C_SendData(0x3B);
+    USART_SendString("send data| ");
+    I2C_SendStartCond();
+    USART_SendString("send start| ");
+    I2C_SendAdd(MPU_READ_ADDR);
+    USART_SendString("send add read| ");
+
+    // اقرئي 6 بايت فقط بدل 14
+    Acc_x = (s16)((I2C_MasterReadAck_mpu() << 8) | I2C_MasterReadAck_mpu());
+    Acc_y = (s16)((I2C_MasterReadAck_mpu() << 8) | I2C_MasterReadAck_mpu());
+    Acc_z = (s16)((I2C_MasterReadAck_mpu() << 8) | I2C_MasterReadNack_mpu()); // NACKفي الآخر
+    I2C_SendStopCond();
+    USART_SendString("stop| ");
+
+    *Ax = (f32) Acc_x / 16384.0f;
+    *Ay = (f32) Acc_y / 16384.0f;
+    *Az = (f32) Acc_z / 16384.0f;
 }

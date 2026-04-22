@@ -41,6 +41,7 @@ void I2C_SendStartCond(void){
            (I2C_GetStatus() != 0x10) );
 }
 
+
 void I2C_SendAdd(u8 Add){
     TWDR = Add;
     TWCR = (1<<TWINT) | (1<<TWEN);
@@ -77,7 +78,7 @@ void I2C_SendData(u8 Data){
 
 void I2C_SendStopCond(void){
 	TWCR = (1<<TWINT) | (1<<TWEN) | (1<<TWSTO);
-	 while(TWCR & (1<<TWSTO));
+	//while(TWCR & (1<<TWSTO));
 }
 
 
@@ -104,9 +105,11 @@ u8 I2C_SlaveRead(void){
 u8 I2C_MasterReadAck_mpu(void){
 	TWCR = (1<<TWINT) | (1<<TWEN) | (1<<TWEA);
 	while(READ_BIT(TWCR, TWINT) == 0);
-	//while(I2C_GetStatus() != 0x50);
+	while(I2C_GetStatus() != 0x50);
 	return TWDR;
 }
+
+
 u8 I2C_MasterReadAck_max(void){
 	TWCR = (1<<TWINT) | (1<<TWEN) | (1<<TWEA);
 	while(READ_BIT(TWCR, TWINT) == 0);
@@ -117,25 +120,15 @@ u8 I2C_MasterReadAck_max(void){
 u8 I2C_MasterReadNack_mpu(void){
 	TWCR = (1<<TWINT) | (1<<TWEN);
 	while(READ_BIT(TWCR, TWINT) == 0);
-	//while(I2C_GetStatus() != 0x58);
+	while(I2C_GetStatus() != 0x58);
 	return TWDR;
 }
+
 u8 I2C_MasterReadNack_max(void){
 	TWCR = (1<<TWINT) | (1<<TWEN);
 	while(READ_BIT(TWCR, TWINT) == 0);
 	while(I2C_GetStatus() != 0x58);
 	return TWDR;
 }
-
-
-
-
-
-
-
-
-
-
-
 
 

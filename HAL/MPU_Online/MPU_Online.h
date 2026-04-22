@@ -133,5 +133,6 @@ void Read_RawValue();
 void Read_Accel(f32 *Ax, f32 *Ay, f32 *Az);
 void Read_Gyro(f32 *Gx, f32 *Gy, f32 *Gz);
 void Read_Temp(f32 *temp);
+void Read_Accel_Only(f32 *Ax, f32 *Ay, f32 *Az);
 
 #endif /* MPU6050_RES_DEFINE_H_ */
