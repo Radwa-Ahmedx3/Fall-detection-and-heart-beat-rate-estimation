@@ -1,4 +1,3 @@
-
 #define F_CPU 16000000UL
 //comment
 #include <util/delay.h>
@@ -94,7 +93,7 @@ int main(void) {
 	// I2C and MPU6050 at address 0x68 (see MPU_6050.h)
 	I2C_Masterinit(100000);
 	MPU6050_Online_Init();
-	MAX30102_Init();
+	///////////MAX30102_Init();
 
 	// Enable global interrupts if needed
 	SREG |= (1 << 7);
@@ -113,25 +112,19 @@ int main(void) {
 
 
 	while (1) {
-
-
-
-
 	         	DDRB |= (1 << DDB0); //toggle led
 		        // 2. Set PA0 HIGH (Turn LED ON)
 		        PORTB |= (1 << PORTB0);
 		        _delay_ms(50); // Wait 500ms
 
-		        // 3. Set PA0 LOW (Turn LED OFF)
-		        PORTB &= ~(1 << PORTB0);
-		        _delay_ms(50); // Wait 500ms
-
-
-
 		// PHASE 1: WAIT FOR USER TAP
 		USART_SendString("System Standby: Fall detection to start...\r\n");
 
 		u8 fall_detected = 0;
+
+		static u8  fall_step = 0;
+		static u16 stability_counter = 0;
+		static u16 fall_timer = 0;
 //=================================MPU while loop=================================
 		while (fall_detected == 0) {
 			Read_Accel(&Ax, &Ay, &Az);
@@ -168,49 +161,120 @@ int main(void) {
 			LCD_movecursor(1, 9);
 			LCD_print_3_digit((u16) (Gz * 100));
 
-//			------------------------- Algorithm -----------------------------
+////			------------------------- Algorithm -----------------------------
+//
 
-			f32 Acc_Total = sqrt((Ax * Ax) + (Ay * Ay) + (Az * Az));
+			_delay_ms(20); // sampling rate عالي (50 قراءة في الثانية)
 
-			if (Acc_Total < 0.4f && fall_step == 0) {
-				fall_step = 1;
-				USART_SendString(
-						"\r\n===================Free Fall Detected!===============\r\n");
+			    // حساب القيمة الكلية للعجلة
+			    f32 Acc_Total = sqrt((Ax * Ax) + (Ay * Ay) + (Az * Az));
+
+			    switch (fall_step) {
+			        case 0: // المرحلة 0: مراقبة بداية السقوط (Free Fall)
+			            // رفعنا الحساسية لـ 0.8f لأن السقوط القصير لا يصل للصفر
+			            if (Acc_Total < 0.82f) {
+			                fall_step = 1;
+			                fall_timer = 0;
+			                USART_SendString(">> 1. Falling Started...\r\n");
+			            }
+			            break;
+
+			        case 1: // المرحلة 1: انتظار الارتطام أو المسك (Impact/Catch)
+			            fall_timer++;
+
+			            // إذا زادت القيمة عن 1.25g (قيمة المسك بالإيد عادة ما تكون ضعيفة)
+			            if (Acc_Total > 1.25f) {
+			                fall_step = 2;
+			                stability_counter = 0;
+			                USART_SendString(">> 2. Catch/Impact Detected!\r\n");
+			            }
+
+			            // Timeout: لو فضل "طاير" أكتر من ثانية ونصف بدون اصطدام (غالباً نويز)
+			            if (fall_timer > 75) {
+			                fall_step = 0;
+			                USART_SendString(">> Reset: No Impact within time window.\r\n");
+			            }
+			            break;
+
+			        case 2: // المرحلة 2: التأكد من الاستقرار (Hand Stability)
+			            // بما أن اليد تهتز، وسعنا النطاق (بين 0.6 و 1.4)
+			            if (Acc_Total > 0.6f && Acc_Total < 1.4f) {
+			                stability_counter++;
+
+			                // 8 عدات (حوالي 160ms) ثبات في اليد كافية للتأكيد
+			                if (stability_counter >= 8) {
+			                    USART_SendString("\r\n =============================== \r\n");
+			                    USART_SendString(" !!! ALARM: FALL CONFIRMED !!! ");
+			                    USART_SendString("\r\n =============================== \r\n");
+
+			                    // تفعيل الإنذار
+			                    DDRD |= (1 << DDD6);
+			                    PORTD |= (1 << PORTD6);
+
+
+			                    // ريست لكل شيء للوقعة القادمة
+			                    fall_step = 0;
+			                    stability_counter = 0;
+			                }
+			            } else {
+			                // لو حصلت خبطة تانية أو حركة عنيفة، بنصفر العداد ونستنى يثبت
+			                stability_counter = 0;
+			            }
+
+			            // أمان إضافي: لو قعد أكتر من 3 ثواني بيتهز ومش راضي يثبت
+			            fall_timer++;
+			            if (fall_timer > 150) {
+			                fall_step = 0;
+			                stability_counter = 0;
+			                USART_SendString(">> Reset: Unstable for too long.\r\n");
+			            }
+			            break;
+			    }
 			}
-
-			if (fall_step == 1 && Acc_Total > 2.5f) {
-				fall_step = 2;
-				USART_SendString(
-						"\r\n===================Impact Detected!===================\r\n");
-				_delay_ms(500);
-			}
-
-			if (fall_step == 2) {
-
-				if (Acc_Total > 0.8f && Acc_Total < 1.2f) {
-					stability_counter++;
-					if (stability_counter >= 20) {
-						USART_SendString(
-								"\r\n===================ALARM: FALL CONFIRMED!===================\r\n");
-						fall_detected = 1;
-
-						DDRD |= (1 << DDD6); //Buzzer On
-				        PORTD |= (1 << PORTD6);
-					    _delay_ms(100);
-					    PORTD &= ~(1 << PORTD6);
-						_delay_ms(100);
-
-						fall_step = 0;
-						stability_counter = 0;
-					}
-				} else {
-					fall_step = 0;
-					stability_counter = 0;
-				}
-			}
-
-			_delay_ms(100);
-		}
+	}
+}
+//			f32 Acc_Total = sqrt((Ax * Ax) + (Ay * Ay) + (Az * Az));
+//
+//			if (Acc_Total < 0.5f && fall_step == 0) {
+//				fall_step = 1;
+//				USART_SendString(
+//						"\r\n===================Free Fall Detected!===============\r\n");
+//			}
+//
+//			if (fall_step == 1 && Acc_Total > 1.5f) {
+//				fall_step = 2;
+//				USART_SendString(
+//						"\r\n===================Impact Detected!===================\r\n");
+//				_delay_ms(500);
+//			}
+//
+//			if (fall_step == 2) {
+//
+//				if (Acc_Total > 0.8f && Acc_Total < 1.2f) {
+//					stability_counter++;
+//					if (stability_counter >= 10) {
+//						USART_SendString(
+//								"\r\n===================ALARM: FALL CONFIRMED!===================\r\n");
+//						fall_detected = 1;
+//
+//						DDRD |= (1 << DDD6); //Buzzer On
+//				        PORTD |= (1 << PORTD6);
+//					    _delay_ms(20);
+//
+//						fall_step = 0;
+//						stability_counter = 0;
+//					}
+//				} else {
+//					fall_step = 0;
+//					stability_counter = 0;
+//				}
+//			}
+//
+//			_delay_ms(100);
+//		}
+//	}
+//		return 0;
+//	}
 
 ////			------------------------- Tap Detection Algorithm -----------------------------
 //
@@ -220,7 +284,7 @@ int main(void) {
 //
 //			// THRESHOLD: 1.5f to 2.0f is usually a good range for a table tap.
 //			// If it's too sensitive, increase to 2.5f.
-//			if (Acc_Total > 1.2f) {
+//			if (Acc_Total > 1.2f || Az < 0.6) {
 //
 //			    // 1. Send Debug message
 //			    USART_SendString("\r\n !!! TAP DETECTED !!! \r\n");
@@ -230,20 +294,17 @@ int main(void) {
 //			    fall_detected = 1;
 //
 //			    // 2. Visual/Audio Feedback
-//			    DIO_SetPinValue(DIO_PORTC, DIO_PIN5, DIO_HIGH); // Buzzer ON
+//
 //
 //			    DDRD |= (1 << DDD6); //Buzzer On
 //			    PORTD |= (1 << PORTD6);
-//			    _delay_ms(100);
-//			    PORTD &= ~(1 << PORTD6);
 //			    _delay_ms(100);
 //
 //
 //			    // 3. Keep the alarm on long enough to see/hear it
 //			    //_delay_ms(1000);
 //
-//			    // 4. Reset indicators
-//			    DIO_SetPinValue(DIO_PORTC, DIO_PIN5, DIO_LOW);  // Buzzer OFF
+//			    // 4. Reset indicator
 //			    //LED_OFF(DIO_PORTC, DIO_PIN2);                  // LED OFF (if your driver has LED_OFF)
 //			}
 //
@@ -252,75 +313,82 @@ int main(void) {
 //
 //			_delay_ms(50);
 //		}
+//	}
+//
+//
+//		return 0;
+//	}
+//
+
 //=================================MAX while loop=================================
-		while (1) {
-
-			USART_SendString("Reading Heartbeat...\r\n");
-
-			USART_SendString("System Initialized. Place Finger...\r\n");
-			while (1) {
-				currentIR = MAX30102_ReadIR();
-				u32 now = millis();
-
-				// If no beat has been detected for 3 seconds, reset the data
-				if (now - lastBeat > 3000 && lastBeat != 0) {
-					beatAvg = 0;
-					lastBeat = 0;
-					rateSpot = 0;
-					for (u8 i = 0; i < RATE_SIZE; i++)
-						rates[i] = 0;
-					USART_SendString("Resetting due to inactivity...\r\n");
-				}
-
-				if (checkForBeat(currentIR)) {
-
-					if (lastBeat == 0) {
-						lastBeat = now;
-					} else {
-						u32 delta = now - lastBeat;
-						lastBeat = now; // Always update lastBeat to the most recent pulse
-
-						USART_SendString("Delta: ");
-						USART_SendNumber(delta);
-						USART_SendString(" ms\r\n");
-						if (delta > 400 && delta < 1500) {
-							beatsPerMinute = 60000.0 / (float) delta;
-
-							if (beatAvg == 0) {
-								for (u8 i = 0; i < RATE_SIZE; i++)
-									rates[i] = (u8) beatsPerMinute;
-							}
-
-							rates[rateSpot++] = (u8) beatsPerMinute;
-							rateSpot %= RATE_SIZE;
-
-							u16 sum = 0;
-							for (u8 i = 0; i < RATE_SIZE; i++)
-								sum += rates[i];
-							beatAvg = (u8) (sum / RATE_SIZE);
-
-							USART_SendString("BPM Detected: ");
-							USART_SendNumber(beatAvg);
-							USART_SendString("\r\n");
-						}
-					}
-				}
-
-				// 3. Optimized Display (Every 250ms instead of 500ms)
-				if (++lcdTimer >= 25) {
-					update_display(beatAvg, currentIR);
-					lcdTimer = 0;
-				}
-
-				_delay_ms(10);
-			}
-		}
-
-		_delay_ms(1000); // Placeholder for heartbeat sampling
-	}
-
-	return 0;
-}
+//		while (1) {
+//
+//			USART_SendString("Reading Heartbeat...\r\n");
+//
+//			USART_SendString("System Initialized. Place Finger...\r\n");
+//			while (1) {
+//				currentIR = MAX30102_ReadIR();
+//				u32 now = millis();
+//
+//				// If no beat has been detected for 3 seconds, reset the data
+//				if (now - lastBeat > 3000 && lastBeat != 0) {
+//					beatAvg = 0;
+//					lastBeat = 0;
+//					rateSpot = 0;
+//					for (u8 i = 0; i < RATE_SIZE; i++)
+//						rates[i] = 0;
+//					USART_SendString("Resetting due to inactivity...\r\n");
+//				}
+//
+//				if (checkForBeat(currentIR)) {
+//
+//					if (lastBeat == 0) {
+//						lastBeat = now;
+//					} else {
+//						u32 delta = now - lastBeat;
+//						lastBeat = now; // Always update lastBeat to the most recent pulse
+//
+//						USART_SendString("Delta: ");
+//						USART_SendNumber(delta);
+//						USART_SendString(" ms\r\n");
+//						if (delta > 400 && delta < 1500) {
+//							beatsPerMinute = 60000.0 / (float) delta;
+//
+//							if (beatAvg == 0) {
+//								for (u8 i = 0; i < RATE_SIZE; i++)
+//									rates[i] = (u8) beatsPerMinute;
+//							}
+//
+//							rates[rateSpot++] = (u8) beatsPerMinute;
+//							rateSpot %= RATE_SIZE;
+//
+//							u16 sum = 0;
+//							for (u8 i = 0; i < RATE_SIZE; i++)
+//								sum += rates[i];
+//							beatAvg = (u8) (sum / RATE_SIZE);
+//
+//							USART_SendString("BPM Detected: ");
+//							USART_SendNumber(beatAvg);
+//							USART_SendString("\r\n");
+//						}
+//					}
+//				}
+//
+//				// 3. Optimized Display (Every 250ms instead of 500ms)
+//				if (++lcdTimer >= 25) {
+//					update_display(beatAvg, currentIR);
+//					lcdTimer = 0;
+//				}
+//
+//				_delay_ms(10);
+//			}
+//		}
+//
+//		_delay_ms(1000); // Placeholder for heartbeat sampling
+//	}
+//
+//	return 0;
+//}
 
 
 
