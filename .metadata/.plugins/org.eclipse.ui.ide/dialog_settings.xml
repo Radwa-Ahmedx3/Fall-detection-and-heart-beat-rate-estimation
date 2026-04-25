@@ -6,6 +6,7 @@
 		<item key="SmartImportRootWizardPage.STORE_NESTED_PROJECTS" value="true"/>
 		<item key="SmartImportRootWizardPage.STORE_CONFIGURE_NATURES" value="true"/>
 		<list key="org.eclipse.ui.internal.wizards.datatransfer.SmartImportRootWizardPage.knownSources">
+			<item value="D:\wifi_max_mpu\wifi_max"/>
 			<item value="D:\wifi_max_mpu\Fall-detection-and-heart-beat-rate-estimation"/>
 			<item value="D:\eclipse codes\Fall-detection-and-heart-beat-rate-estimation-MPU.zip"/>
 			<item value="D:\wifi_max_mpu\Fall-detection-and-heart-beat-rate-estimation\wifi_max"/>

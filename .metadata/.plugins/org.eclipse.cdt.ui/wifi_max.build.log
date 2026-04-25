@@ -1,5 +1,48 @@
-15:14:39 **** Incremental Build of configuration Debug for project wifi_max ****
+14:31:47 **** Build of configuration Debug for project wifi_max ****
 make all 
+Building file: ../MCAL/USART_Online/USART_Online.c
+Invoking: AVR Compiler
+avr-gcc -Wall -g2 -gstabs -Os -fpack-struct -fshort-enums -ffunction-sections -fdata-sections -std=gnu99 -funsigned-char -funsigned-bitfields -mmcu=atmega32 -DF_CPU=16000000UL -MMD -MP -MF"MCAL/USART_Online/USART_Online.d" -MT"MCAL/USART_Online/USART_Online.o" -c -o "MCAL/USART_Online/USART_Online.o" "../MCAL/USART_Online/USART_Online.c"
+Finished building: ../MCAL/USART_Online/USART_Online.c
+ 
+Building file: ../MCAL/Timer1/Timer1.c
+Invoking: AVR Compiler
+avr-gcc -Wall -g2 -gstabs -Os -fpack-struct -fshort-enums -ffunction-sections -fdata-sections -std=gnu99 -funsigned-char -funsigned-bitfields -mmcu=atmega32 -DF_CPU=16000000UL -MMD -MP -MF"MCAL/Timer1/Timer1.d" -MT"MCAL/Timer1/Timer1.o" -c -o "MCAL/Timer1/Timer1.o" "../MCAL/Timer1/Timer1.c"
+Finished building: ../MCAL/Timer1/Timer1.c
+ 
+Building file: ../MCAL/I2C/I2C.c
+Invoking: AVR Compiler
+avr-gcc -Wall -g2 -gstabs -Os -fpack-struct -fshort-enums -ffunction-sections -fdata-sections -std=gnu99 -funsigned-char -funsigned-bitfields -mmcu=atmega32 -DF_CPU=16000000UL -MMD -MP -MF"MCAL/I2C/I2C.d" -MT"MCAL/I2C/I2C.o" -c -o "MCAL/I2C/I2C.o" "../MCAL/I2C/I2C.c"
+../MCAL/I2C/I2C.c: In function 'I2C_SendAdd':
+../MCAL/I2C/I2C.c:49: warning: unused variable 'status'
+Finished building: ../MCAL/I2C/I2C.c
+ 
+Building file: ../MCAL/DIO/DIO.c
+Invoking: AVR Compiler
+avr-gcc -Wall -g2 -gstabs -Os -fpack-struct -fshort-enums -ffunction-sections -fdata-sections -std=gnu99 -funsigned-char -funsigned-bitfields -mmcu=atmega32 -DF_CPU=16000000UL -MMD -MP -MF"MCAL/DIO/DIO.d" -MT"MCAL/DIO/DIO.o" -c -o "MCAL/DIO/DIO.o" "../MCAL/DIO/DIO.c"
+../MCAL/DIO/DIO.c: In function 'DIO_ReadPinValue':
+../MCAL/DIO/DIO.c:119: warning: 'PinStatues' may be used uninitialized in this function
+../MCAL/DIO/DIO.c: In function 'DIO_ReadPortValue':
+../MCAL/DIO/DIO.c:232: warning: 'PortStatues' may be used uninitialized in this function
+Finished building: ../MCAL/DIO/DIO.c
+ 
+Building file: ../MCAL/ADC/ADC.c
+Invoking: AVR Compiler
+avr-gcc -Wall -g2 -gstabs -Os -fpack-struct -fshort-enums -ffunction-sections -fdata-sections -std=gnu99 -funsigned-char -funsigned-bitfields -mmcu=atmega32 -DF_CPU=16000000UL -MMD -MP -MF"MCAL/ADC/ADC.d" -MT"MCAL/ADC/ADC.o" -c -o "MCAL/ADC/ADC.o" "../MCAL/ADC/ADC.c"
+Finished building: ../MCAL/ADC/ADC.c
+ 
+Building file: ../HAL/LED/LED.c
+Invoking: AVR Compiler
+avr-gcc -Wall -g2 -gstabs -Os -fpack-struct -fshort-enums -ffunction-sections -fdata-sections -std=gnu99 -funsigned-char -funsigned-bitfields -mmcu=atmega32 -DF_CPU=16000000UL -MMD -MP -MF"HAL/LED/LED.d" -MT"HAL/LED/LED.o" -c -o "HAL/LED/LED.o" "../HAL/LED/LED.c"
+Finished building: ../HAL/LED/LED.c
+ 
+Building file: ../HAL/LCD/LCD.c
+Invoking: AVR Compiler
+avr-gcc -Wall -g2 -gstabs -Os -fpack-struct -fshort-enums -ffunction-sections -fdata-sections -std=gnu99 -funsigned-char -funsigned-bitfields -mmcu=atmega32 -DF_CPU=16000000UL -MMD -MP -MF"HAL/LCD/LCD.d" -MT"HAL/LCD/LCD.o" -c -o "HAL/LCD/LCD.o" "../HAL/LCD/LCD.c"
+../HAL/LCD/LCD.c:24:7: warning: extra tokens at end of #else directive
+../HAL/LCD/LCD.c:69:7: warning: extra tokens at end of #else directive
+Finished building: ../HAL/LCD/LCD.c
+ 
 Building file: ../APP/main.c
 Invoking: AVR Compiler
 avr-gcc -Wall -g2 -gstabs -Os -fpack-struct -fshort-enums -ffunction-sections -fdata-sections -std=gnu99 -funsigned-char -funsigned-bitfields -mmcu=atmega32 -DF_CPU=16000000UL -MMD -MP -MF"APP/main.d" -MT"APP/main.o" -c -o "APP/main.o" "../APP/main.c"
@@ -35,5 +78,5 @@ Data:       1227 bytes (59.9% Full)
 Finished building: sizedummy
  
 
-15:14:40 Build Finished. 0 errors, 1 warnings. (took 1s.574ms)
+14:31:54 Build Finished. 0 errors, 6 warnings. (took 7s.413ms)
 
