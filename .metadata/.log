@@ -1,0 +1,403 @@
+!SESSION 2026-04-13 11:15:14.314 -----------------------------------------------
+eclipse.buildId=4.34.0.20241128-0756
+java.version=21.0.5
+java.vendor=Eclipse Adoptium
+BootLoader constants: OS=win32, ARCH=x86_64, WS=win32, NL=en_US
+Framework arguments:  -product org.eclipse.epp.package.cpp.product
+Command-line arguments:  -os win32 -ws win32 -arch x86_64 -product org.eclipse.epp.package.cpp.product -data D:\wifi_max_mpu\Fall-detection-and-heart-beat-rate-estimation
+
+!ENTRY org.eclipse.egit.ui 2 0 2026-04-13 11:15:34.212
+!MESSAGE Warning: The environment variable HOME is not set. The following directory will be used to store the Git
+user global configuration and to define the default location to store repositories: 'C:\Users\Eng.Nawal Hussein'. If this is
+not correct please set the HOME environment variable and restart Eclipse. Otherwise Git for Windows and
+EGit might behave differently since they see different configuration options.
+This warning can be switched off on the Team > Git > Confirmations and Warnings preference page.
+
+!ENTRY org.eclipse.cdt.core 1 0 2026-04-13 11:15:56.909
+!MESSAGE Indexed 'wifi_max' (8 sources, 28 headers) in 1.43 sec: 817 declarations; 3,133 references; 0 unresolved inclusions; 1 syntax errors; 0 unresolved names (0%)
+
+!ENTRY org.eclipse.cdt.core 1 0 2026-04-13 12:50:30.597
+!MESSAGE Indexed 'wifi_max' (8 sources, 28 headers) in 0.535 sec: 818 declarations; 3,712 references; 0 unresolved inclusions; 1 syntax errors; 0 unresolved names (0%)
+
+!ENTRY org.eclipse.ui.ide 4 0 2026-04-13 13:01:54.350
+!MESSAGE Configuring selected directories
+!SUBENTRY 1 org.eclipse.ui.ide 4 0 2026-04-13 13:01:54.351
+!MESSAGE Errors occurred while refreshing resources with the local file system.
+!STACK 1
+org.eclipse.core.internal.resources.ResourceException: Errors occurred while refreshing resources with the local file system.
+	at org.eclipse.core.internal.localstore.FileSystemResourceManager.refreshResource(FileSystemResourceManager.java:1043)
+	at org.eclipse.core.internal.localstore.FileSystemResourceManager.refresh(FileSystemResourceManager.java:1023)
+	at org.eclipse.core.internal.resources.Resource.refreshLocal(Resource.java:1601)
+	at org.eclipse.ui.internal.wizards.datatransfer.SmartImportJob.importProjectAndChildrenRecursively(SmartImportJob.java:410)
+	at org.eclipse.ui.internal.wizards.datatransfer.SmartImportJob$1.run(SmartImportJob.java:223)
+	at org.eclipse.core.internal.jobs.Worker.run(Worker.java:63)
+Contains: The project description file (.project) for 'Fall detection and heart beat rate estimation' is missing.  This file contains important information about the project.  The project will not function properly until this file is restored.
+java.lang.Exception: The project description file (.project) for 'Fall detection and heart beat rate estimation' is missing.  This file contains important information about the project.  The project will not function properly until this file is restored.
+	at org.eclipse.core.internal.resources.ResourceException.provideStackTrace(ResourceException.java:42)
+	at org.eclipse.core.internal.resources.ResourceException.<init>(ResourceException.java:38)
+	at org.eclipse.core.internal.localstore.FileSystemResourceManager.read(FileSystemResourceManager.java:970)
+	at org.eclipse.core.internal.resources.Project.updateDescription(Project.java:1429)
+	at org.eclipse.core.internal.resources.File.updateMetadataFiles(File.java:562)
+	at org.eclipse.core.internal.localstore.RefreshLocalVisitor.visit(RefreshLocalVisitor.java:306)
+	at org.eclipse.core.internal.localstore.UnifiedTree.accept(UnifiedTree.java:126)
+	at org.eclipse.core.internal.localstore.FileSystemResourceManager.refreshResource(FileSystemResourceManager.java:1040)
+	at org.eclipse.core.internal.localstore.FileSystemResourceManager.refresh(FileSystemResourceManager.java:1023)
+	at org.eclipse.core.internal.resources.Resource.refreshLocal(Resource.java:1601)
+	at org.eclipse.ui.internal.wizards.datatransfer.SmartImportJob.importProjectAndChildrenRecursively(SmartImportJob.java:410)
+	at org.eclipse.ui.internal.wizards.datatransfer.SmartImportJob$1.run(SmartImportJob.java:223)
+	at org.eclipse.core.internal.jobs.Worker.run(Worker.java:63)
+!SUBENTRY 2 org.eclipse.core.resources 4 271 2026-04-13 13:01:54.352
+!MESSAGE Errors occurred while refreshing resources with the local file system.
+!SUBENTRY 3 org.eclipse.core.resources 4 567 2026-04-13 13:01:54.353
+!MESSAGE The project description file (.project) for 'Fall detection and heart beat rate estimation' is missing.  This file contains important information about the project.  The project will not function properly until this file is restored.
+!STACK 0
+java.lang.Exception: The project description file (.project) for 'Fall detection and heart beat rate estimation' is missing.  This file contains important information about the project.  The project will not function properly until this file is restored.
+	at org.eclipse.core.internal.resources.ResourceException.provideStackTrace(ResourceException.java:42)
+	at org.eclipse.core.internal.resources.ResourceException.<init>(ResourceException.java:38)
+	at org.eclipse.core.internal.localstore.FileSystemResourceManager.read(FileSystemResourceManager.java:970)
+	at org.eclipse.core.internal.resources.Project.updateDescription(Project.java:1429)
+	at org.eclipse.core.internal.resources.File.updateMetadataFiles(File.java:562)
+	at org.eclipse.core.internal.localstore.RefreshLocalVisitor.visit(RefreshLocalVisitor.java:306)
+	at org.eclipse.core.internal.localstore.UnifiedTree.accept(UnifiedTree.java:126)
+	at org.eclipse.core.internal.localstore.FileSystemResourceManager.refreshResource(FileSystemResourceManager.java:1040)
+	at org.eclipse.core.internal.localstore.FileSystemResourceManager.refresh(FileSystemResourceManager.java:1023)
+	at org.eclipse.core.internal.resources.Resource.refreshLocal(Resource.java:1601)
+	at org.eclipse.ui.internal.wizards.datatransfer.SmartImportJob.importProjectAndChildrenRecursively(SmartImportJob.java:410)
+	at org.eclipse.ui.internal.wizards.datatransfer.SmartImportJob$1.run(SmartImportJob.java:223)
+	at org.eclipse.core.internal.jobs.Worker.run(Worker.java:63)
+
+!ENTRY org.eclipse.core.resources 4 1 2026-04-13 13:01:54.532
+!MESSAGE Problems occurred while refreshing local changes
+!SUBENTRY 1 org.eclipse.core.resources 4 1 2026-04-13 13:01:54.532
+!MESSAGE Problems occurred while refreshing local changes
+!STACK 1
+org.eclipse.core.internal.resources.ResourceException: Errors occurred while refreshing resources with the local file system.
+	at org.eclipse.core.internal.localstore.FileSystemResourceManager.refreshResource(FileSystemResourceManager.java:1043)
+	at org.eclipse.core.internal.localstore.FileSystemResourceManager.refresh(FileSystemResourceManager.java:1023)
+	at org.eclipse.core.internal.resources.Resource.refreshLocal(Resource.java:1601)
+	at org.eclipse.core.internal.refresh.RefreshJob.runInWorkspace(RefreshJob.java:227)
+	at org.eclipse.core.internal.resources.InternalWorkspaceJob.run(InternalWorkspaceJob.java:43)
+	at org.eclipse.core.internal.jobs.Worker.run(Worker.java:63)
+Contains: The project description file (.project) for 'Fall detection and heart beat rate estimation' is missing.  This file contains important information about the project.  The project will not function properly until this file is restored.
+java.lang.Exception: The project description file (.project) for 'Fall detection and heart beat rate estimation' is missing.  This file contains important information about the project.  The project will not function properly until this file is restored.
+	at org.eclipse.core.internal.resources.ResourceException.provideStackTrace(ResourceException.java:42)
+	at org.eclipse.core.internal.resources.ResourceException.<init>(ResourceException.java:38)
+	at org.eclipse.core.internal.localstore.FileSystemResourceManager.read(FileSystemResourceManager.java:970)
+	at org.eclipse.core.internal.resources.Project.updateDescription(Project.java:1429)
+	at org.eclipse.core.internal.resources.File.updateMetadataFiles(File.java:562)
+	at org.eclipse.core.internal.localstore.RefreshLocalVisitor.visit(RefreshLocalVisitor.java:306)
+	at org.eclipse.core.internal.localstore.UnifiedTree.accept(UnifiedTree.java:126)
+	at org.eclipse.core.internal.localstore.FileSystemResourceManager.refreshResource(FileSystemResourceManager.java:1040)
+	at org.eclipse.core.internal.localstore.FileSystemResourceManager.refresh(FileSystemResourceManager.java:1023)
+	at org.eclipse.core.internal.resources.Resource.refreshLocal(Resource.java:1601)
+	at org.eclipse.core.internal.refresh.RefreshJob.runInWorkspace(RefreshJob.java:227)
+	at org.eclipse.core.internal.resources.InternalWorkspaceJob.run(InternalWorkspaceJob.java:43)
+	at org.eclipse.core.internal.jobs.Worker.run(Worker.java:63)
+!SUBENTRY 2 org.eclipse.core.resources 4 271 2026-04-13 13:01:54.532
+!MESSAGE Errors occurred while refreshing resources with the local file system.
+!SUBENTRY 3 org.eclipse.core.resources 4 567 2026-04-13 13:01:54.533
+!MESSAGE The project description file (.project) for 'Fall detection and heart beat rate estimation' is missing.  This file contains important information about the project.  The project will not function properly until this file is restored.
+!STACK 0
+java.lang.Exception: The project description file (.project) for 'Fall detection and heart beat rate estimation' is missing.  This file contains important information about the project.  The project will not function properly until this file is restored.
+	at org.eclipse.core.internal.resources.ResourceException.provideStackTrace(ResourceException.java:42)
+	at org.eclipse.core.internal.resources.ResourceException.<init>(ResourceException.java:38)
+	at org.eclipse.core.internal.localstore.FileSystemResourceManager.read(FileSystemResourceManager.java:970)
+	at org.eclipse.core.internal.resources.Project.updateDescription(Project.java:1429)
+	at org.eclipse.core.internal.resources.File.updateMetadataFiles(File.java:562)
+	at org.eclipse.core.internal.localstore.RefreshLocalVisitor.visit(RefreshLocalVisitor.java:306)
+	at org.eclipse.core.internal.localstore.UnifiedTree.accept(UnifiedTree.java:126)
+	at org.eclipse.core.internal.localstore.FileSystemResourceManager.refreshResource(FileSystemResourceManager.java:1040)
+	at org.eclipse.core.internal.localstore.FileSystemResourceManager.refresh(FileSystemResourceManager.java:1023)
+	at org.eclipse.core.internal.resources.Resource.refreshLocal(Resource.java:1601)
+	at org.eclipse.core.internal.refresh.RefreshJob.runInWorkspace(RefreshJob.java:227)
+	at org.eclipse.core.internal.resources.InternalWorkspaceJob.run(InternalWorkspaceJob.java:43)
+	at org.eclipse.core.internal.jobs.Worker.run(Worker.java:63)
+
+!ENTRY org.eclipse.cdt.core 1 0 2026-04-13 13:01:54.687
+!MESSAGE Indexed 'Fall detection and heart beat rate estimation' (0 sources, 0 headers) in 0.001 sec: 0 declarations; 0 references; 0 unresolved inclusions; 0 syntax errors; 0 unresolved names (0%)
+
+!ENTRY org.eclipse.core.resources 4 1 2026-04-13 13:02:14.416
+!MESSAGE Internal Error
+!STACK 1
+org.eclipse.core.internal.resources.ResourceException(/Fall detection and heart beat rate estimation/.project)[368]: org.eclipse.core.runtime.CoreException: File not found: D:\EECE\2nd Year\2nd term\Embedded Systems\Project Setup\Final Setup\.project.
+	at org.eclipse.core.internal.filesystem.Policy.error(Policy.java:32)
+	at org.eclipse.core.internal.filesystem.local.LocalFile.handleReadIOException(LocalFile.java:542)
+	at org.eclipse.core.internal.filesystem.local.LocalFile.readAllBytes(LocalFile.java:534)
+	at org.eclipse.core.internal.localstore.FileSystemResourceManager.readAllBytes(FileSystemResourceManager.java:911)
+	at org.eclipse.core.internal.resources.File.readAllBytes(File.java:363)
+	at org.eclipse.core.internal.localstore.FileSystemResourceManager.descriptionChanged(FileSystemResourceManager.java:429)
+	at org.eclipse.core.internal.localstore.FileSystemResourceManager.internalWrite(FileSystemResourceManager.java:710)
+	at org.eclipse.core.internal.resources.Project.writeDescription(Project.java:1466)
+	at org.eclipse.core.internal.resources.Project.writeDescription(Project.java:1447)
+	at org.eclipse.core.internal.resources.Resource.deleteResource(Resource.java:882)
+	at org.eclipse.core.internal.resources.ResourceTree.deletedFile(ResourceTree.java:131)
+	at org.eclipse.core.internal.resources.ResourceTree.internalDeleteFile(ResourceTree.java:277)
+	at org.eclipse.core.internal.resources.ResourceTree.internalDeleteProject(ResourceTree.java:395)
+	at org.eclipse.core.internal.resources.ResourceTree.standardDeleteProject(ResourceTree.java:855)
+	at org.eclipse.core.internal.resources.Resource.unprotectedDelete(Resource.java:1834)
+	at org.eclipse.core.internal.resources.Resource.delete(Resource.java:803)
+	at org.eclipse.core.internal.resources.Project.delete(Project.java:359)
+	at org.eclipse.ltk.core.refactoring.resource.DeleteResourceChange.perform(DeleteResourceChange.java:150)
+	at org.eclipse.ltk.core.refactoring.CompositeChange.perform(CompositeChange.java:278)
+	at org.eclipse.ltk.core.refactoring.CompositeChange.perform(CompositeChange.java:278)
+	at org.eclipse.ltk.core.refactoring.PerformChangeOperation.lambda$0(PerformChangeOperation.java:247)
+	at org.eclipse.core.internal.resources.Workspace.run(Workspace.java:2457)
+	at org.eclipse.core.internal.resources.Workspace.run(Workspace.java:2482)
+	at org.eclipse.ltk.core.refactoring.PerformChangeOperation.executeChange(PerformChangeOperation.java:284)
+	at org.eclipse.ltk.internal.ui.refactoring.UIPerformChangeOperation.executeChange(UIPerformChangeOperation.java:94)
+	at org.eclipse.ltk.core.refactoring.PerformChangeOperation.run(PerformChangeOperation.java:210)
+	at org.eclipse.core.internal.resources.Workspace.run(Workspace.java:2457)
+	at org.eclipse.core.internal.resources.Workspace.run(Workspace.java:2482)
+	at org.eclipse.ltk.internal.ui.refactoring.WorkbenchRunnableAdapter.run(WorkbenchRunnableAdapter.java:89)
+	at org.eclipse.jface.operation.ModalContext$ModalContextThread.run(ModalContext.java:124)
+Caused by: java.nio.file.NoSuchFileException: D:\EECE\2nd Year\2nd term\Embedded Systems\Project Setup\Final Setup\.project
+	at java.base/sun.nio.fs.WindowsException.translateToIOException(WindowsException.java:85)
+	at java.base/sun.nio.fs.WindowsException.rethrowAsIOException(WindowsException.java:103)
+	at java.base/sun.nio.fs.WindowsException.rethrowAsIOException(WindowsException.java:108)
+	at java.base/sun.nio.fs.WindowsFileSystemProvider.newByteChannel(WindowsFileSystemProvider.java:234)
+	at java.base/java.nio.file.Files.newByteChannel(Files.java:379)
+	at java.base/java.nio.file.Files.newByteChannel(Files.java:431)
+	at java.base/java.nio.file.Files.readAllBytes(Files.java:3268)
+	at org.eclipse.core.internal.filesystem.local.LocalFile.readAllBytes(LocalFile.java:532)
+	... 27 more
+!SUBENTRY 1 org.eclipse.core.resources 4 368 2026-04-13 13:02:14.421
+!MESSAGE File not found: D:\EECE\2nd Year\2nd term\Embedded Systems\Project Setup\Final Setup\.project.
+!STACK 1
+org.eclipse.core.runtime.CoreException: File not found: D:\EECE\2nd Year\2nd term\Embedded Systems\Project Setup\Final Setup\.project.
+	at org.eclipse.core.internal.filesystem.Policy.error(Policy.java:32)
+	at org.eclipse.core.internal.filesystem.local.LocalFile.handleReadIOException(LocalFile.java:542)
+	at org.eclipse.core.internal.filesystem.local.LocalFile.readAllBytes(LocalFile.java:534)
+	at org.eclipse.core.internal.localstore.FileSystemResourceManager.readAllBytes(FileSystemResourceManager.java:911)
+	at org.eclipse.core.internal.resources.File.readAllBytes(File.java:363)
+	at org.eclipse.core.internal.localstore.FileSystemResourceManager.descriptionChanged(FileSystemResourceManager.java:429)
+	at org.eclipse.core.internal.localstore.FileSystemResourceManager.internalWrite(FileSystemResourceManager.java:710)
+	at org.eclipse.core.internal.resources.Project.writeDescription(Project.java:1466)
+	at org.eclipse.core.internal.resources.Project.writeDescription(Project.java:1447)
+	at org.eclipse.core.internal.resources.Resource.deleteResource(Resource.java:882)
+	at org.eclipse.core.internal.resources.ResourceTree.deletedFile(ResourceTree.java:131)
+	at org.eclipse.core.internal.resources.ResourceTree.internalDeleteFile(ResourceTree.java:277)
+	at org.eclipse.core.internal.resources.ResourceTree.internalDeleteProject(ResourceTree.java:395)
+	at org.eclipse.core.internal.resources.ResourceTree.standardDeleteProject(ResourceTree.java:855)
+	at org.eclipse.core.internal.resources.Resource.unprotectedDelete(Resource.java:1834)
+	at org.eclipse.core.internal.resources.Resource.delete(Resource.java:803)
+	at org.eclipse.core.internal.resources.Project.delete(Project.java:359)
+	at org.eclipse.ltk.core.refactoring.resource.DeleteResourceChange.perform(DeleteResourceChange.java:150)
+	at org.eclipse.ltk.core.refactoring.CompositeChange.perform(CompositeChange.java:278)
+	at org.eclipse.ltk.core.refactoring.CompositeChange.perform(CompositeChange.java:278)
+	at org.eclipse.ltk.core.refactoring.PerformChangeOperation.lambda$0(PerformChangeOperation.java:247)
+	at org.eclipse.core.internal.resources.Workspace.run(Workspace.java:2457)
+	at org.eclipse.core.internal.resources.Workspace.run(Workspace.java:2482)
+	at org.eclipse.ltk.core.refactoring.PerformChangeOperation.executeChange(PerformChangeOperation.java:284)
+	at org.eclipse.ltk.internal.ui.refactoring.UIPerformChangeOperation.executeChange(UIPerformChangeOperation.java:94)
+	at org.eclipse.ltk.core.refactoring.PerformChangeOperation.run(PerformChangeOperation.java:210)
+	at org.eclipse.core.internal.resources.Workspace.run(Workspace.java:2457)
+	at org.eclipse.core.internal.resources.Workspace.run(Workspace.java:2482)
+	at org.eclipse.ltk.internal.ui.refactoring.WorkbenchRunnableAdapter.run(WorkbenchRunnableAdapter.java:89)
+	at org.eclipse.jface.operation.ModalContext$ModalContextThread.run(ModalContext.java:124)
+Caused by: java.nio.file.NoSuchFileException: D:\EECE\2nd Year\2nd term\Embedded Systems\Project Setup\Final Setup\.project
+	at java.base/sun.nio.fs.WindowsException.translateToIOException(WindowsException.java:85)
+	at java.base/sun.nio.fs.WindowsException.rethrowAsIOException(WindowsException.java:103)
+	at java.base/sun.nio.fs.WindowsException.rethrowAsIOException(WindowsException.java:108)
+	at java.base/sun.nio.fs.WindowsFileSystemProvider.newByteChannel(WindowsFileSystemProvider.java:234)
+	at java.base/java.nio.file.Files.newByteChannel(Files.java:379)
+	at java.base/java.nio.file.Files.newByteChannel(Files.java:431)
+	at java.base/java.nio.file.Files.readAllBytes(Files.java:3268)
+	at org.eclipse.core.internal.filesystem.local.LocalFile.readAllBytes(LocalFile.java:532)
+	... 27 more
+!SUBENTRY 2 org.eclipse.core.filesystem 4 269 2026-04-13 13:02:14.421
+!MESSAGE File not found: D:\EECE\2nd Year\2nd term\Embedded Systems\Project Setup\Final Setup\.project.
+!STACK 0
+java.nio.file.NoSuchFileException: D:\EECE\2nd Year\2nd term\Embedded Systems\Project Setup\Final Setup\.project
+	at java.base/sun.nio.fs.WindowsException.translateToIOException(WindowsException.java:85)
+	at java.base/sun.nio.fs.WindowsException.rethrowAsIOException(WindowsException.java:103)
+	at java.base/sun.nio.fs.WindowsException.rethrowAsIOException(WindowsException.java:108)
+	at java.base/sun.nio.fs.WindowsFileSystemProvider.newByteChannel(WindowsFileSystemProvider.java:234)
+	at java.base/java.nio.file.Files.newByteChannel(Files.java:379)
+	at java.base/java.nio.file.Files.newByteChannel(Files.java:431)
+	at java.base/java.nio.file.Files.readAllBytes(Files.java:3268)
+	at org.eclipse.core.internal.filesystem.local.LocalFile.readAllBytes(LocalFile.java:532)
+	at org.eclipse.core.internal.localstore.FileSystemResourceManager.readAllBytes(FileSystemResourceManager.java:911)
+	at org.eclipse.core.internal.resources.File.readAllBytes(File.java:363)
+	at org.eclipse.core.internal.localstore.FileSystemResourceManager.descriptionChanged(FileSystemResourceManager.java:429)
+	at org.eclipse.core.internal.localstore.FileSystemResourceManager.internalWrite(FileSystemResourceManager.java:710)
+	at org.eclipse.core.internal.resources.Project.writeDescription(Project.java:1466)
+	at org.eclipse.core.internal.resources.Project.writeDescription(Project.java:1447)
+	at org.eclipse.core.internal.resources.Resource.deleteResource(Resource.java:882)
+	at org.eclipse.core.internal.resources.ResourceTree.deletedFile(ResourceTree.java:131)
+	at org.eclipse.core.internal.resources.ResourceTree.internalDeleteFile(ResourceTree.java:277)
+	at org.eclipse.core.internal.resources.ResourceTree.internalDeleteProject(ResourceTree.java:395)
+	at org.eclipse.core.internal.resources.ResourceTree.standardDeleteProject(ResourceTree.java:855)
+	at org.eclipse.core.internal.resources.Resource.unprotectedDelete(Resource.java:1834)
+	at org.eclipse.core.internal.resources.Resource.delete(Resource.java:803)
+	at org.eclipse.core.internal.resources.Project.delete(Project.java:359)
+	at org.eclipse.ltk.core.refactoring.resource.DeleteResourceChange.perform(DeleteResourceChange.java:150)
+	at org.eclipse.ltk.core.refactoring.CompositeChange.perform(CompositeChange.java:278)
+	at org.eclipse.ltk.core.refactoring.CompositeChange.perform(CompositeChange.java:278)
+	at org.eclipse.ltk.core.refactoring.PerformChangeOperation.lambda$0(PerformChangeOperation.java:247)
+	at org.eclipse.core.internal.resources.Workspace.run(Workspace.java:2457)
+	at org.eclipse.core.internal.resources.Workspace.run(Workspace.java:2482)
+	at org.eclipse.ltk.core.refactoring.PerformChangeOperation.executeChange(PerformChangeOperation.java:284)
+	at org.eclipse.ltk.internal.ui.refactoring.UIPerformChangeOperation.executeChange(UIPerformChangeOperation.java:94)
+	at org.eclipse.ltk.core.refactoring.PerformChangeOperation.run(PerformChangeOperation.java:210)
+	at org.eclipse.core.internal.resources.Workspace.run(Workspace.java:2457)
+	at org.eclipse.core.internal.resources.Workspace.run(Workspace.java:2482)
+	at org.eclipse.ltk.internal.ui.refactoring.WorkbenchRunnableAdapter.run(WorkbenchRunnableAdapter.java:89)
+	at org.eclipse.jface.operation.ModalContext$ModalContextThread.run(ModalContext.java:124)
+!SESSION 2026-04-13 13:03:42.026 -----------------------------------------------
+eclipse.buildId=4.34.0.20241128-0756
+java.version=21.0.5
+java.vendor=Eclipse Adoptium
+BootLoader constants: OS=win32, ARCH=x86_64, WS=win32, NL=en_US
+Framework arguments:  -product org.eclipse.epp.package.cpp.product
+Command-line arguments:  -os win32 -ws win32 -arch x86_64 -product org.eclipse.epp.package.cpp.product -data D:\wifi_max_mpu\Fall-detection-and-heart-beat-rate-estimation
+
+!ENTRY org.eclipse.egit.ui 2 0 2026-04-13 13:04:00.252
+!MESSAGE Warning: The environment variable HOME is not set. The following directory will be used to store the Git
+user global configuration and to define the default location to store repositories: 'C:\Users\Eng.Nawal Hussein'. If this is
+not correct please set the HOME environment variable and restart Eclipse. Otherwise Git for Windows and
+EGit might behave differently since they see different configuration options.
+This warning can be switched off on the Team > Git > Confirmations and Warnings preference page.
+
+!ENTRY org.eclipse.cdt.core 1 0 2026-04-13 13:06:46.911
+!MESSAGE Indexed 'max_only' (0 sources, 0 headers) in 0.004 sec: 0 declarations; 0 references; 0 unresolved inclusions; 0 syntax errors; 0 unresolved names (0%)
+!SESSION 2026-04-13 15:35:08.932 -----------------------------------------------
+eclipse.buildId=4.34.0.20241128-0756
+java.version=21.0.5
+java.vendor=Eclipse Adoptium
+BootLoader constants: OS=win32, ARCH=x86_64, WS=win32, NL=en_US
+Framework arguments:  -product org.eclipse.epp.package.cpp.product
+Command-line arguments:  -os win32 -ws win32 -arch x86_64 -product org.eclipse.epp.package.cpp.product
+
+!ENTRY org.eclipse.core.resources 4 567 2026-04-13 15:35:16.055
+!MESSAGE Workspace restored, but some problems occurred.
+!SUBENTRY 1 org.eclipse.core.resources 4 567 2026-04-13 15:35:16.055
+!MESSAGE Could not read metadata for 'wifi_max'.
+!STACK 1
+org.eclipse.core.internal.resources.ResourceException(/wifi_max)[567]: java.lang.Exception: The project description file (.project) for 'wifi_max' is missing.  This file contains important information about the project.  The project will not function properly until this file is restored.
+	at org.eclipse.core.internal.resources.ResourceException.provideStackTrace(ResourceException.java:42)
+	at org.eclipse.core.internal.resources.ResourceException.<init>(ResourceException.java:38)
+	at org.eclipse.core.internal.localstore.FileSystemResourceManager.read(FileSystemResourceManager.java:970)
+	at org.eclipse.core.internal.resources.SaveManager.restoreMetaInfo(SaveManager.java:954)
+	at org.eclipse.core.internal.resources.SaveManager.restoreMetaInfo(SaveManager.java:934)
+	at org.eclipse.core.internal.resources.SaveManager.restore(SaveManager.java:790)
+	at org.eclipse.core.internal.resources.SaveManager.startup(SaveManager.java:1616)
+	at org.eclipse.core.internal.resources.Workspace.startup(Workspace.java:2624)
+	at org.eclipse.core.internal.resources.Workspace.open(Workspace.java:2325)
+	at org.eclipse.core.resources.ResourcesPlugin$WorkspaceInitCustomizer.addingService(ResourcesPlugin.java:591)
+	at org.eclipse.core.resources.ResourcesPlugin$WorkspaceInitCustomizer.addingService(ResourcesPlugin.java:1)
+	at org.osgi.util.tracker.ServiceTracker$Tracked.customizerAdding(ServiceTracker.java:947)
+	at org.osgi.util.tracker.ServiceTracker$Tracked.customizerAdding(ServiceTracker.java:1)
+	at org.osgi.util.tracker.AbstractTracked.trackAdding(AbstractTracked.java:257)
+	at org.osgi.util.tracker.AbstractTracked.trackInitial(AbstractTracked.java:184)
+	at org.osgi.util.tracker.ServiceTracker.open(ServiceTracker.java:324)
+	at org.osgi.util.tracker.ServiceTracker.open(ServiceTracker.java:267)
+	at org.eclipse.core.resources.ResourcesPlugin.start(ResourcesPlugin.java:565)
+	at org.eclipse.osgi.internal.framework.BundleContextImpl$2.run(BundleContextImpl.java:833)
+	at org.eclipse.osgi.internal.framework.BundleContextImpl$2.run(BundleContextImpl.java:1)
+	at java.base/java.security.AccessController.doPrivileged(AccessController.java:571)
+	at org.eclipse.osgi.internal.framework.BundleContextImpl.startActivator(BundleContextImpl.java:825)
+	at org.eclipse.osgi.internal.framework.BundleContextImpl.start(BundleContextImpl.java:775)
+	at org.eclipse.osgi.internal.framework.EquinoxBundle.startWorker0(EquinoxBundle.java:1057)
+	at org.eclipse.osgi.internal.framework.EquinoxBundle$EquinoxModule.startWorker(EquinoxBundle.java:387)
+	at org.eclipse.osgi.container.Module.doStart(Module.java:639)
+	at org.eclipse.osgi.container.Module.start(Module.java:498)
+	at org.eclipse.osgi.framework.util.SecureAction.start(SecureAction.java:528)
+	at org.eclipse.osgi.internal.hooks.EclipseLazyStarter.postFindLocalClass(EclipseLazyStarter.java:122)
+	at org.eclipse.osgi.internal.loader.classpath.ClasspathManager.findLocalClass(ClasspathManager.java:620)
+	at org.eclipse.osgi.internal.loader.ModuleClassLoader.findLocalClass(ModuleClassLoader.java:348)
+	at org.eclipse.osgi.internal.loader.BundleLoader.findLocalClass(BundleLoader.java:414)
+	at org.eclipse.osgi.internal.loader.sources.SingleSourcePackage.loadClass(SingleSourcePackage.java:41)
+	at org.eclipse.osgi.internal.loader.BundleLoader.findClass0(BundleLoader.java:516)
+	at org.eclipse.osgi.internal.loader.BundleLoader.findClass(BundleLoader.java:434)
+	at org.eclipse.osgi.internal.loader.ModuleClassLoader.loadClass(ModuleClassLoader.java:174)
+	at java.base/java.lang.ClassLoader.loadClass(ClassLoader.java:526)
+	at org.eclipse.ui.internal.ide.application.IDEApplication.start(IDEApplication.java:179)
+	at org.eclipse.equinox.internal.app.EclipseAppHandle.run(EclipseAppHandle.java:208)
+	at org.eclipse.core.runtime.internal.adaptor.EclipseAppLauncher.runApplication(EclipseAppLauncher.java:143)
+	at org.eclipse.core.runtime.internal.adaptor.EclipseAppLauncher.start(EclipseAppLauncher.java:109)
+	at org.eclipse.core.runtime.adaptor.EclipseStarter.run(EclipseStarter.java:439)
+	at org.eclipse.core.runtime.adaptor.EclipseStarter.run(EclipseStarter.java:271)
+	at java.base/jdk.internal.reflect.DirectMethodHandleAccessor.invoke(DirectMethodHandleAccessor.java:103)
+	at java.base/java.lang.reflect.Method.invoke(Method.java:580)
+	at org.eclipse.equinox.launcher.Main.invokeFramework(Main.java:668)
+	at org.eclipse.equinox.launcher.Main.basicRun(Main.java:605)
+	at org.eclipse.equinox.launcher.Main.run(Main.java:1481)
+!SUBENTRY 2 org.eclipse.core.resources 4 567 2026-04-13 15:35:16.066
+!MESSAGE The project description file (.project) for 'wifi_max' is missing.  This file contains important information about the project.  The project will not function properly until this file is restored.
+!STACK 0
+java.lang.Exception: The project description file (.project) for 'wifi_max' is missing.  This file contains important information about the project.  The project will not function properly until this file is restored.
+	at org.eclipse.core.internal.resources.ResourceException.provideStackTrace(ResourceException.java:42)
+	at org.eclipse.core.internal.resources.ResourceException.<init>(ResourceException.java:38)
+	at org.eclipse.core.internal.localstore.FileSystemResourceManager.read(FileSystemResourceManager.java:970)
+	at org.eclipse.core.internal.resources.SaveManager.restoreMetaInfo(SaveManager.java:954)
+	at org.eclipse.core.internal.resources.SaveManager.restoreMetaInfo(SaveManager.java:934)
+	at org.eclipse.core.internal.resources.SaveManager.restore(SaveManager.java:790)
+	at org.eclipse.core.internal.resources.SaveManager.startup(SaveManager.java:1616)
+	at org.eclipse.core.internal.resources.Workspace.startup(Workspace.java:2624)
+	at org.eclipse.core.internal.resources.Workspace.open(Workspace.java:2325)
+	at org.eclipse.core.resources.ResourcesPlugin$WorkspaceInitCustomizer.addingService(ResourcesPlugin.java:591)
+	at org.eclipse.core.resources.ResourcesPlugin$WorkspaceInitCustomizer.addingService(ResourcesPlugin.java:1)
+	at org.osgi.util.tracker.ServiceTracker$Tracked.customizerAdding(ServiceTracker.java:947)
+	at org.osgi.util.tracker.ServiceTracker$Tracked.customizerAdding(ServiceTracker.java:1)
+	at org.osgi.util.tracker.AbstractTracked.trackAdding(AbstractTracked.java:257)
+	at org.osgi.util.tracker.AbstractTracked.trackInitial(AbstractTracked.java:184)
+	at org.osgi.util.tracker.ServiceTracker.open(ServiceTracker.java:324)
+	at org.osgi.util.tracker.ServiceTracker.open(ServiceTracker.java:267)
+	at org.eclipse.core.resources.ResourcesPlugin.start(ResourcesPlugin.java:565)
+	at org.eclipse.osgi.internal.framework.BundleContextImpl$2.run(BundleContextImpl.java:833)
+	at org.eclipse.osgi.internal.framework.BundleContextImpl$2.run(BundleContextImpl.java:1)
+	at java.base/java.security.AccessController.doPrivileged(AccessController.java:571)
+	at org.eclipse.osgi.internal.framework.BundleContextImpl.startActivator(BundleContextImpl.java:825)
+	at org.eclipse.osgi.internal.framework.BundleContextImpl.start(BundleContextImpl.java:775)
+	at org.eclipse.osgi.internal.framework.EquinoxBundle.startWorker0(EquinoxBundle.java:1057)
+	at org.eclipse.osgi.internal.framework.EquinoxBundle$EquinoxModule.startWorker(EquinoxBundle.java:387)
+	at org.eclipse.osgi.container.Module.doStart(Module.java:639)
+	at org.eclipse.osgi.container.Module.start(Module.java:498)
+	at org.eclipse.osgi.framework.util.SecureAction.start(SecureAction.java:528)
+	at org.eclipse.osgi.internal.hooks.EclipseLazyStarter.postFindLocalClass(EclipseLazyStarter.java:122)
+	at org.eclipse.osgi.internal.loader.classpath.ClasspathManager.findLocalClass(ClasspathManager.java:620)
+	at org.eclipse.osgi.internal.loader.ModuleClassLoader.findLocalClass(ModuleClassLoader.java:348)
+	at org.eclipse.osgi.internal.loader.BundleLoader.findLocalClass(BundleLoader.java:414)
+	at org.eclipse.osgi.internal.loader.sources.SingleSourcePackage.loadClass(SingleSourcePackage.java:41)
+	at org.eclipse.osgi.internal.loader.BundleLoader.findClass0(BundleLoader.java:516)
+	at org.eclipse.osgi.internal.loader.BundleLoader.findClass(BundleLoader.java:434)
+	at org.eclipse.osgi.internal.loader.ModuleClassLoader.loadClass(ModuleClassLoader.java:174)
+	at java.base/java.lang.ClassLoader.loadClass(ClassLoader.java:526)
+	at org.eclipse.ui.internal.ide.application.IDEApplication.start(IDEApplication.java:179)
+	at org.eclipse.equinox.internal.app.EclipseAppHandle.run(EclipseAppHandle.java:208)
+	at org.eclipse.core.runtime.internal.adaptor.EclipseAppLauncher.runApplication(EclipseAppLauncher.java:143)
+	at org.eclipse.core.runtime.internal.adaptor.EclipseAppLauncher.start(EclipseAppLauncher.java:109)
+	at org.eclipse.core.runtime.adaptor.EclipseStarter.run(EclipseStarter.java:439)
+	at org.eclipse.core.runtime.adaptor.EclipseStarter.run(EclipseStarter.java:271)
+	at java.base/jdk.internal.reflect.DirectMethodHandleAccessor.invoke(DirectMethodHandleAccessor.java:103)
+	at java.base/java.lang.reflect.Method.invoke(Method.java:580)
+	at org.eclipse.equinox.launcher.Main.invokeFramework(Main.java:668)
+	at org.eclipse.equinox.launcher.Main.basicRun(Main.java:605)
+	at org.eclipse.equinox.launcher.Main.run(Main.java:1481)
+
+!ENTRY org.eclipse.egit.ui 2 0 2026-04-13 15:35:27.502
+!MESSAGE Warning: The environment variable HOME is not set. The following directory will be used to store the Git
+user global configuration and to define the default location to store repositories: 'C:\Users\Eng.Nawal Hussein'. If this is
+not correct please set the HOME environment variable and restart Eclipse. Otherwise Git for Windows and
+EGit might behave differently since they see different configuration options.
+This warning can be switched off on the Team > Git > Confirmations and Warnings preference page.
+!SESSION 2026-04-13 15:41:07.697 -----------------------------------------------
+eclipse.buildId=4.34.0.20241128-0756
+java.version=21.0.5
+java.vendor=Eclipse Adoptium
+BootLoader constants: OS=win32, ARCH=x86_64, WS=win32, NL=en_US
+Framework arguments:  -product org.eclipse.epp.package.cpp.product
+Command-line arguments:  -os win32 -ws win32 -arch x86_64 -product org.eclipse.epp.package.cpp.product -data D:\wifi_max_mpu\Fall-detection-and-heart-beat-rate-estimation
+
+!ENTRY org.eclipse.egit.ui 2 0 2026-04-13 15:41:28.984
+!MESSAGE Warning: The environment variable HOME is not set. The following directory will be used to store the Git
+user global configuration and to define the default location to store repositories: 'C:\Users\Eng.Nawal Hussein'. If this is
+not correct please set the HOME environment variable and restart Eclipse. Otherwise Git for Windows and
+EGit might behave differently since they see different configuration options.
+This warning can be switched off on the Team > Git > Confirmations and Warnings preference page.
+
+!ENTRY org.eclipse.cdt.core 1 0 2026-04-13 15:43:52.623
+!MESSAGE Indexed 'FullIntegratedCode' (0 sources, 0 headers) in 0.002 sec: 0 declarations; 0 references; 0 unresolved inclusions; 0 syntax errors; 0 unresolved names (0%)
+
+!ENTRY org.eclipse.cdt.core 1 0 2026-04-23 14:31:45.349
+!MESSAGE Indexed 'wifi_max' (8 sources, 28 headers) in 1.79 sec: 837 declarations; 3,809 references; 0 unresolved inclusions; 1 syntax errors; 0 unresolved names (0%)

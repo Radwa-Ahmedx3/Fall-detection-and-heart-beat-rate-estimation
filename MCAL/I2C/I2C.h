@@ -8,6 +8,8 @@
 #ifndef MCAL_I2C_I2C_H_
 #define MCAL_I2C_I2C_H_
 
+#include "../../LIB/STD_types.h"
+
 #define TWBR   (*(volatile u8 *)(0x20))
 #define TWCR   (*(volatile u8 *)(0x56))
 #define TWSR   (*(volatile u8 *)(0x21))
@@ -23,6 +25,7 @@
 #define TWIE       0
 
 #define I2C_PRESCALER 4
+
 
 void I2C_Masterinit(u32 SCL);
 void I2C_SendStartCond(void);

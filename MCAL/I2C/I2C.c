@@ -53,28 +53,32 @@ void I2C_SendAdd(u8 Add){
     }*/
 }
 
-/*void I2C_SendData(u8 Data){
+void I2C_SendData(u8 Data){
       TWDR=Data;
       TWCR = (1<<TWINT) | (1<<TWEN);
       while(READ_BIT(TWCR, TWINT) == 0);
       //while((TWSR & 0xF8) != 0x28);
-}*/
-
-void I2C_SendData(u8 Data){
-    TWDR = Data;
-    TWCR = (1<<TWINT) | (1<<TWEN);
-
-    // Wait for hardware to finish
-    while(READ_BIT(TWCR, TWINT) == 0);
-
-
-    // Check status WITHOUT blocking
-    /*if((TWSR & 0xF8) != 0x28) {
-        USART_SendString("Data NACK! ");
-    } else {
-        USART_SendString("Data ACK! ");
-    }*/
 }
+
+//void I2C_SendData(u8 Data){
+//	uint16_t timeout = 10000;
+//    TWDR = Data;
+//    TWCR = (1<<TWINT) | (1<<TWEN);
+//
+//    // Wait for hardware to finish
+//    while(READ_BIT(TWCR, TWINT) == 0 && timeout > 0) {
+//            timeout--;
+//        }
+//    //while(READ_BIT(TWCR, TWINT) == 0);
+//
+//
+//    // Check status WITHOUT blocking
+//    /*if((TWSR & 0xF8) != 0x28) {
+//        USART_SendString("Data NACK! ");
+//    } else {
+//        USART_SendString("Data ACK! ");
+//    }*/
+//}
 
 void I2C_SendStopCond(void){
 	TWCR = (1<<TWINT) | (1<<TWEN) | (1<<TWSTO);

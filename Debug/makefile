@@ -12,7 +12,6 @@ RM := rm -rf
 -include MCAL/Timer1/subdir.mk
 -include MCAL/I2C/subdir.mk
 -include MCAL/DIO/subdir.mk
--include MCAL/ADC/subdir.mk
 -include HAL/MPU_Online/subdir.mk
 -include HAL/MAX_10502/subdir.mk
 -include HAL/LED/subdir.mk

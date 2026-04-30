@@ -1,0 +1,3 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<session version="1.0">&#x0A;<refactoring comment="Delete resource &apos;Fall detection and heart beat rate estimation&apos;" deleteContents="true" description="Delete resource &apos;Fall detection and heart beat rate estimation&apos;" element1="/Fall detection and heart beat rate estimation" flags="7" id="org.eclipse.ltk.core.refactoring.delete.resources" resources="1" stamp="1776078134621"/>&#x0A;<refactoring comment="Delete resource &apos;max_only&apos;" deleteContents="true" description="Delete resource &apos;max_only&apos;" element1="/max_only" flags="7" id="org.eclipse.ltk.core.refactoring.delete.resources" resources="1" stamp="1776081253742"/>
+</session>
