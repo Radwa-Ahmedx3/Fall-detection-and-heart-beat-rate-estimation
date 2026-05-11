@@ -107,6 +107,7 @@ f32 removeDC(u32 irValue){
 }
 
 void update_display(u8 avgBPM, u32 rawIR) {
+
     LCD_movecursor(0,0);
     LCD_writestr((u8*)"BPM: ");
     char buffer[5];
@@ -134,20 +135,23 @@ void update_display(u8 avgBPM, u32 rawIR) {
         else if (avgBPM < 60) {
             LCD_writestr((u8*)"Low Heart Rate  ");
             USART_SendString("Low Heart Rate\r\n");
-            DDRB |= (1 << DDB1);
+        	PORTB &= ~(1 << PORTB2);
+        	PORTD &= ~(1 << PORTD7);
             PORTB|= (1 << PORTB1);
         }
         else if (avgBPM <= 105) {
             LCD_writestr((u8*)"Normal Rate     ");
             USART_SendString("Normal Heart Rate\r\n");
-            DDRD |= (1 << DDD7);
+        	PORTB &= ~(1 << PORTB1);
+        	PORTD &= ~(1 << PORTB2);
             PORTD|= (1 << PORTD7);
         }
         else {
             LCD_writestr((u8*)"High Heart Rate ");
             USART_SendString("High Heart Rate\r\n");
-            DDRB |= (1 << DDB2);
-             PORTB|= (1 << PORTB2);
+        	PORTB &= ~(1 << PORTB1);
+        	PORTD &= ~(1 << PORTD7);
+            PORTB|= (1 << PORTB2);
         }
     }
     USART_SendString("--------------------\r\n");
