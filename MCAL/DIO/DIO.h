@@ -8,7 +8,7 @@
 #ifndef MCAL_DIO_DIO_H_
 #define MCAL_DIO_DIO_H_
 
-#define DDRA    *(volatile u8*)(0x3A)
+/*#define DDRA    *(volatile u8*)(0x3A)
 #define PORTA   *(volatile u8*)(0x3B)
 #define PINA    *(volatile u8*)(0x39)
 
@@ -22,8 +22,7 @@
 
 #define DDRD    *(volatile u8*)(0x31)
 #define PORTD   *(volatile u8*)(0x32)
-#define PIND    *(volatile u8*)(0x30)
-
+#define PIND    *(volatile u8*)(0x30)*/
 #define DIO_PORTA   1
 #define DIO_PORTB   2
 #define DIO_PORTC   3

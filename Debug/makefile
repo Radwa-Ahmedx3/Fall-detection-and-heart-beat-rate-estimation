@@ -12,8 +12,7 @@ RM := rm -rf
 -include MCAL/Timer1/subdir.mk
 -include MCAL/I2C/subdir.mk
 -include MCAL/DIO/subdir.mk
--include HAL/MPU_Online/subdir.mk
--include HAL/MAX_10502/subdir.mk
+-include MCAL/ADC/subdir.mk
 -include HAL/LED/subdir.mk
 -include HAL/LCD/subdir.mk
 -include APP/subdir.mk
@@ -43,17 +42,17 @@ $(wildcard ../makefile.init) \
 $(wildcard ../makefile.targets) \
 
 
-BUILD_ARTIFACT_NAME := Fall_detection_and_heart_beat_rate_estimation
+BUILD_ARTIFACT_NAME := Final_Integrated_Code_WIFIMAXMPU
 BUILD_ARTIFACT_EXTENSION := elf
 BUILD_ARTIFACT_PREFIX :=
 BUILD_ARTIFACT := $(BUILD_ARTIFACT_PREFIX)$(BUILD_ARTIFACT_NAME)$(if $(BUILD_ARTIFACT_EXTENSION),.$(BUILD_ARTIFACT_EXTENSION),)
 
 # Add inputs and outputs from these tool invocations to the build variables 
 LSS += \
-Fall_detection_and_heart_beat_rate_estimation.lss \
+Final_Integrated_Code_WIFIMAXMPU.lss \
 
 FLASH_IMAGE += \
-Fall_detection_and_heart_beat_rate_estimation.hex \
+Final_Integrated_Code_WIFIMAXMPU.hex \
 
 SIZEDUMMY += \
 sizedummy \
@@ -63,37 +62,37 @@ sizedummy \
 all: main-build
 
 # Main-build Target
-main-build: Fall_detection_and_heart_beat_rate_estimation.elf secondary-outputs
+main-build: Final_Integrated_Code_WIFIMAXMPU.elf secondary-outputs
 
 # Tool invocations
-Fall_detection_and_heart_beat_rate_estimation.elf: $(OBJS) $(USER_OBJS) makefile objects.mk $(OPTIONAL_TOOL_DEPS)
+Final_Integrated_Code_WIFIMAXMPU.elf: $(OBJS) $(USER_OBJS) makefile objects.mk $(OPTIONAL_TOOL_DEPS)
 	@echo 'Building target: $@'
 	@echo 'Invoking: AVR C Linker'
-	avr-gcc -Wl,-Map,Fall_detection_and_heart_beat_rate_estimation.map -mmcu=atmega32 -o "Fall_detection_and_heart_beat_rate_estimation.elf" $(OBJS) $(USER_OBJS) $(LIBS)
+	avr-gcc -Wl,-Map,Final_Integrated_Code_WIFIMAXMPU.map -mmcu=atmega32 -o "Final_Integrated_Code_WIFIMAXMPU.elf" $(OBJS) $(USER_OBJS) $(LIBS)
 	@echo 'Finished building target: $@'
 	@echo ' '
 
-Fall_detection_and_heart_beat_rate_estimation.lss: Fall_detection_and_heart_beat_rate_estimation.elf makefile objects.mk $(OPTIONAL_TOOL_DEPS)
+Final_Integrated_Code_WIFIMAXMPU.lss: Final_Integrated_Code_WIFIMAXMPU.elf makefile objects.mk $(OPTIONAL_TOOL_DEPS)
 	@echo 'Invoking: AVR Create Extended Listing'
-	-avr-objdump -h -S Fall_detection_and_heart_beat_rate_estimation.elf  >"Fall_detection_and_heart_beat_rate_estimation.lss"
+	-avr-objdump -h -S Final_Integrated_Code_WIFIMAXMPU.elf  >"Final_Integrated_Code_WIFIMAXMPU.lss"
 	@echo 'Finished building: $@'
 	@echo ' '
 
-Fall_detection_and_heart_beat_rate_estimation.hex: Fall_detection_and_heart_beat_rate_estimation.elf makefile objects.mk $(OPTIONAL_TOOL_DEPS)
+Final_Integrated_Code_WIFIMAXMPU.hex: Final_Integrated_Code_WIFIMAXMPU.elf makefile objects.mk $(OPTIONAL_TOOL_DEPS)
 	@echo 'Create Flash image (ihex format)'
-	-avr-objcopy -R .eeprom -R .fuse -R .lock -R .signature -O ihex Fall_detection_and_heart_beat_rate_estimation.elf  "Fall_detection_and_heart_beat_rate_estimation.hex"
+	-avr-objcopy -R .eeprom -R .fuse -R .lock -R .signature -O ihex Final_Integrated_Code_WIFIMAXMPU.elf  "Final_Integrated_Code_WIFIMAXMPU.hex"
 	@echo 'Finished building: $@'
 	@echo ' '
 
-sizedummy: Fall_detection_and_heart_beat_rate_estimation.elf makefile objects.mk $(OPTIONAL_TOOL_DEPS)
+sizedummy: Final_Integrated_Code_WIFIMAXMPU.elf makefile objects.mk $(OPTIONAL_TOOL_DEPS)
 	@echo 'Invoking: Print Size'
-	-avr-size --format=avr --mcu=atmega32 Fall_detection_and_heart_beat_rate_estimation.elf
+	-avr-size --format=avr --mcu=atmega32 Final_Integrated_Code_WIFIMAXMPU.elf
 	@echo 'Finished building: $@'
 	@echo ' '
 
 # Other Targets
 clean:
-	-$(RM) $(FLASH_IMAGE)$(ELFS)$(OBJS)$(ASM_DEPS)$(S_DEPS)$(SIZEDUMMY)$(S_UPPER_DEPS)$(LSS)$(C_DEPS) Fall_detection_and_heart_beat_rate_estimation.elf
+	-$(RM) $(FLASH_IMAGE)$(ELFS)$(OBJS)$(ASM_DEPS)$(S_DEPS)$(SIZEDUMMY)$(S_UPPER_DEPS)$(LSS)$(C_DEPS) Final_Integrated_Code_WIFIMAXMPU.elf
 	-@echo ' '
 
 secondary-outputs: $(LSS) $(FLASH_IMAGE) $(SIZEDUMMY)

@@ -3,7 +3,6 @@
 #include "USART_Online.h"
 #include <stdlib.h>
 #include <stdio.h>
-#include <avr/dtostrf.h>
 #include "../../LIB/STD_types.h"
 
 #ifndef BAUDRATE
@@ -80,30 +79,4 @@ void USART_SendNumber(u32 num)
     sprintf(str, "%lu", num);  // signed long
     USART_SendString(str);
     USART_SendString("\r\n");
-}
-// This function sends JUST the digits, no extra spaces or new lines
-void USART_SendNumber_Raw(s32 num) {
-    char buffer[11];
-    itoa(num, buffer, 10); // Converts integer to string
-    USART_SendString(buffer);
-}
-
-void USART_SendFloat_chato(f32 number, u8 decimal_places) {
-    if (number < 0) {
-        USART_SendString("-"); // Use String or Char
-        number = -number;
-    }
-
-    u32 integer_part = (u32)number;
-    USART_SendNumber_Raw(integer_part); // <--- Use Raw version
-
-    USART_SendString(".");
-
-    f32 fraction = number - (f32)integer_part;
-    for (u8 i = 0; i < decimal_places; i++) {
-        fraction *= 10;
-        u8 digit = (u8)fraction;
-        USART_SendNumber_Raw(digit);    // <--- Use Raw version
-        fraction -= digit;
-    }
 }

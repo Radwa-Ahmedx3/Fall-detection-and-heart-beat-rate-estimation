@@ -23,8 +23,7 @@ SUBDIRS := \
 APP \
 HAL/LCD \
 HAL/LED \
-HAL/MAX_10502 \
-HAL/MPU_Online \
+MCAL/ADC \
 MCAL/DIO \
 MCAL/I2C \
 MCAL/Timer1 \

@@ -3,6 +3,7 @@
 
 #include "../DIO/DIO.h"
 #include<avr/io.h>
+#include <avr/io.h>
 #include "Timer1.h"
 u32 G_Prescaller ;
 void (*Timer1_ptr)(void) ;

@@ -2,7 +2,7 @@
 #ifndef MCAL_TIMER1_TIMER1_H_
 #define MCAL_TIMER1_TIMER1_H_
 
-#define TCCR1A   (*(volatile u8*)(0x4F))
+/*#define TCCR1A   (*(volatile u8*)(0x4F))
 #define TCCR1B   (*(volatile u8*)(0x4E))
 #define TCNT1    (*(volatile u16*)(0x4C))
 #define OCR1A    (*(volatile u16*)(0x4A))
@@ -10,7 +10,7 @@
 #define ICR1     (*(volatile u16*)(0x46))
 #define TIMSK    (*(volatile u8*)(0x59))
 #define TIFR     (*(volatile u8*)(0x58))
-#define SREG     (*(volatile u8*)(0x5F))
+#define SREG     (*(volatile u8*)(0x5F))*/
 
 #define COM1A1  7
 #define COM1A0  6
