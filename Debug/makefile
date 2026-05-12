@@ -42,17 +42,14 @@ $(wildcard ../makefile.init) \
 $(wildcard ../makefile.targets) \
 
 
-BUILD_ARTIFACT_NAME := Final_Integrated_Code_WIFIMAXMPU
+BUILD_ARTIFACT_NAME := WIFIMAXMPU_FINAL
 BUILD_ARTIFACT_EXTENSION := elf
 BUILD_ARTIFACT_PREFIX :=
 BUILD_ARTIFACT := $(BUILD_ARTIFACT_PREFIX)$(BUILD_ARTIFACT_NAME)$(if $(BUILD_ARTIFACT_EXTENSION),.$(BUILD_ARTIFACT_EXTENSION),)
 
 # Add inputs and outputs from these tool invocations to the build variables 
 LSS += \
-Final_Integrated_Code_WIFIMAXMPU.lss \
-
-FLASH_IMAGE += \
-Final_Integrated_Code_WIFIMAXMPU.hex \
+WIFIMAXMPU_FINAL.lss \
 
 SIZEDUMMY += \
 sizedummy \
@@ -62,40 +59,34 @@ sizedummy \
 all: main-build
 
 # Main-build Target
-main-build: Final_Integrated_Code_WIFIMAXMPU.elf secondary-outputs
+main-build: WIFIMAXMPU_FINAL.elf secondary-outputs
 
 # Tool invocations
-Final_Integrated_Code_WIFIMAXMPU.elf: $(OBJS) $(USER_OBJS) makefile objects.mk $(OPTIONAL_TOOL_DEPS)
+WIFIMAXMPU_FINAL.elf: $(OBJS) $(USER_OBJS) makefile objects.mk $(OPTIONAL_TOOL_DEPS)
 	@echo 'Building target: $@'
 	@echo 'Invoking: AVR C Linker'
-	avr-gcc -Wl,-Map,Final_Integrated_Code_WIFIMAXMPU.map -mmcu=atmega32 -o "Final_Integrated_Code_WIFIMAXMPU.elf" $(OBJS) $(USER_OBJS) $(LIBS)
+	avr-gcc -Wl,-Map,WIFIMAXMPU_FINAL.map -mmcu=atmega16 -o "WIFIMAXMPU_FINAL.elf" $(OBJS) $(USER_OBJS) $(LIBS)
 	@echo 'Finished building target: $@'
 	@echo ' '
 
-Final_Integrated_Code_WIFIMAXMPU.lss: Final_Integrated_Code_WIFIMAXMPU.elf makefile objects.mk $(OPTIONAL_TOOL_DEPS)
+WIFIMAXMPU_FINAL.lss: WIFIMAXMPU_FINAL.elf makefile objects.mk $(OPTIONAL_TOOL_DEPS)
 	@echo 'Invoking: AVR Create Extended Listing'
-	-avr-objdump -h -S Final_Integrated_Code_WIFIMAXMPU.elf  >"Final_Integrated_Code_WIFIMAXMPU.lss"
+	-avr-objdump -h -S WIFIMAXMPU_FINAL.elf  >"WIFIMAXMPU_FINAL.lss"
 	@echo 'Finished building: $@'
 	@echo ' '
 
-Final_Integrated_Code_WIFIMAXMPU.hex: Final_Integrated_Code_WIFIMAXMPU.elf makefile objects.mk $(OPTIONAL_TOOL_DEPS)
-	@echo 'Create Flash image (ihex format)'
-	-avr-objcopy -R .eeprom -R .fuse -R .lock -R .signature -O ihex Final_Integrated_Code_WIFIMAXMPU.elf  "Final_Integrated_Code_WIFIMAXMPU.hex"
-	@echo 'Finished building: $@'
-	@echo ' '
-
-sizedummy: Final_Integrated_Code_WIFIMAXMPU.elf makefile objects.mk $(OPTIONAL_TOOL_DEPS)
+sizedummy: WIFIMAXMPU_FINAL.elf makefile objects.mk $(OPTIONAL_TOOL_DEPS)
 	@echo 'Invoking: Print Size'
-	-avr-size --format=avr --mcu=atmega32 Final_Integrated_Code_WIFIMAXMPU.elf
+	-avr-size --format=avr --mcu=atmega16 WIFIMAXMPU_FINAL.elf
 	@echo 'Finished building: $@'
 	@echo ' '
 
 # Other Targets
 clean:
-	-$(RM) $(FLASH_IMAGE)$(ELFS)$(OBJS)$(ASM_DEPS)$(S_DEPS)$(SIZEDUMMY)$(S_UPPER_DEPS)$(LSS)$(C_DEPS) Final_Integrated_Code_WIFIMAXMPU.elf
+	-$(RM) $(ELFS)$(OBJS)$(ASM_DEPS)$(S_DEPS)$(SIZEDUMMY)$(S_UPPER_DEPS)$(LSS)$(C_DEPS) WIFIMAXMPU_FINAL.elf
 	-@echo ' '
 
-secondary-outputs: $(LSS) $(FLASH_IMAGE) $(SIZEDUMMY)
+secondary-outputs: $(LSS) $(SIZEDUMMY)
 
 .PHONY: all clean dependents main-build
 

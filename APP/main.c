@@ -137,7 +137,7 @@ int main(void) {
 	UART_WaitFor("OK");
 
 	char wifi_cmd[100];
-	sprintf(wifi_cmd, "AT+CWJAP=\"nana\",\"01023025564\"\r\n");
+	sprintf(wifi_cmd, "AT+CWJAP=\"smartmonitor\",\"smartmonitor123456\"\r\n");
 	UART_SendString(wifi_cmd);
 
 	if (UART_WaitFor("WIFI GOT IP")) {
@@ -194,7 +194,7 @@ int main(void) {
 					if (safeCounter > 120) {
 						emergencyLatched = 0;
 						fallDetected = 0;
-
+						PORTD &= ~(1 << PORTD6);
 						send_fall_status("No%20Emergency");
 
 						UART_SendString("FALL CLEARED\r\n");
